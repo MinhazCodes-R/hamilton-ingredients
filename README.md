@@ -22,5 +22,11 @@ Open `index.html` directly in a browser, or enable **GitHub Pages** for this rep
 ## Filters in the UI
 
 - **In Stock / Shopping List / Running Low** tabs
-- Category chips (Oils & Vinegars, Sauces & Condiments, Spices & Seasonings, Baking, Dairy & Fridge, Produce)
+- Category chips (Oils & Vinegars, Sauces & Condiments, Spices & Seasonings, Baking, Dairy & Fridge, Produce, Meat & Seafood)
 - Free-text search
+
+## Checking things off while you shop
+
+Every card has a checkbox. Tap it as you drop an item in your cart — the card dims and the name gets struck through. Checked state is saved in your browser's `localStorage`, so it survives closing the tab and reopening later. The **Shopping List** tab shows a running "X of Y checked off" count, and a **Clear checked-off items** link appears whenever anything is checked so you can reset before your next trip.
+
+Note: this is per-browser/device, not synced anywhere — it won't follow you across a different phone or laptop.

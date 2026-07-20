@@ -8,7 +8,30 @@ const CATEGORY_ICON = {
   "Baking": "🥣",
   "Dairy & Fridge": "🧀",
   "Produce": "🧄",
+  "Meat & Seafood": "🥩",
 };
+
+const STORAGE_KEY = "hamilton-ingredients-checked";
+
+// Give every ingredient a stable id so checked state survives re-renders
+// and page reloads, even if the list order changes slightly.
+data.ingredients.forEach((item, i) => {
+  item.id = `${i}-${item.name.replace(/\s+/g, "-").toLowerCase()}`;
+});
+
+function loadChecked() {
+  try {
+    return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
+  } catch {
+    return new Set();
+  }
+}
+
+function saveChecked() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify([...checked]));
+}
+
+const checked = loadChecked();
 
 const state = {
   status: "all",
@@ -24,6 +47,7 @@ const updatedDate = document.getElementById("updated-date");
 const categoryChips = document.getElementById("category-chips");
 const statusTabs = document.getElementById("status-tabs");
 const search = document.getElementById("search");
+const clearCheckedBtn = document.getElementById("clear-checked");
 
 updatedDate.textContent = data.updated;
 totalCount.textContent = data.ingredients.length;
@@ -77,6 +101,7 @@ function matchesFilters(item) {
 }
 
 function cardHTML(item) {
+  const isChecked = checked.has(item.id);
   const badge = item.low
     ? `<span class="badge low">Low</span>`
     : item.status === "need"
@@ -88,13 +113,16 @@ function cardHTML(item) {
     : `<div class="card-img placeholder">${CATEGORY_ICON[item.category] || "🍽️"}</div>`;
 
   return `
-    <div class="card">
+    <div class="card ${isChecked ? "checked" : ""}" data-id="${item.id}">
       <div class="card-img">
-        ${item.image ? imgBlock : imgBlock}
+        ${imgBlock}
         ${badge}
       </div>
       <div class="card-body">
-        <div class="card-name">${item.name}</div>
+        <label class="card-check">
+          <input type="checkbox" data-id="${item.id}" ${isChecked ? "checked" : ""} />
+          <span class="card-name">${item.name}</span>
+        </label>
         ${item.note ? `<div class="card-note">${item.note}</div>` : ""}
         <div class="card-meta">
           <span class="card-category">${CATEGORY_ICON[item.category] || ""} ${item.category}</span>
@@ -109,8 +137,37 @@ function render() {
   const filtered = data.ingredients.filter(matchesFilters);
   grid.innerHTML = filtered.map(cardHTML).join("");
   emptyMsg.hidden = filtered.length !== 0;
-  resultCount.textContent = `${filtered.length} of ${data.ingredients.length} ingredients`;
+
+  const checkedInView = filtered.filter((i) => checked.has(i.id)).length;
+  resultCount.textContent =
+    state.status === "need" && filtered.length
+      ? `${checkedInView} of ${filtered.length} checked off`
+      : `${filtered.length} of ${data.ingredients.length} ingredients`;
+
+  const anyCheckedAtAll = data.ingredients.some((i) => checked.has(i.id));
+  clearCheckedBtn.hidden = !anyCheckedAtAll;
 }
+
+grid.addEventListener("change", (e) => {
+  const box = e.target.closest("input[type=checkbox][data-id]");
+  if (!box) return;
+  const id = box.dataset.id;
+  if (box.checked) {
+    checked.add(id);
+  } else {
+    checked.delete(id);
+  }
+  saveChecked();
+  const card = grid.querySelector(`.card[data-id="${id}"]`);
+  if (card) card.classList.toggle("checked", box.checked);
+  render();
+});
+
+clearCheckedBtn.addEventListener("click", () => {
+  checked.clear();
+  saveChecked();
+  render();
+});
 
 search.addEventListener("input", (e) => {
   state.query = e.target.value.trim();

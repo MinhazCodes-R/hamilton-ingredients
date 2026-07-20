@@ -26,7 +26,10 @@
       <div class="chip-row" id="category-chips"></div>
     </div>
 
-    <p class="count" id="result-count"></p>
+    <div class="count-row">
+      <p class="count" id="result-count"></p>
+      <button id="clear-checked" class="link-btn" hidden>Clear checked-off items</button>
+    </div>
 
     <div class="grid" id="grid"></div>
     <p class="empty" id="empty-msg" hidden>No ingredients match your filters.</p>
@@ -45,7 +48,8 @@
     "Spices & Seasonings",
     "Baking",
     "Dairy & Fridge",
-    "Produce"
+    "Produce",
+    "Meat & Seafood"
   ],
   "ingredients": [
     { "name": "Terra Delyssa Organic Extra Virgin Olive Oil", "category": "Oils & Vinegars", "image": "evoo-terra-delyssa.jpg", "status": "have" },
@@ -86,6 +90,11 @@
     { "name": "Garlic", "category": "Produce", "qty": "5 pcs, bag", "image": "garlic-2.jpg", "status": "have" },
     { "name": "Onion(s)", "category": "Produce", "image": "onion.jpg", "status": "have" },
     { "name": "Bean Sprouts (Sprout King)", "category": "Produce", "image": "bean-sprouts.jpg", "status": "have" },
+    { "name": "Zucchini", "category": "Produce", "image": null, "status": "need" },
+
+    { "name": "Steak (sirloin or ribeye)", "category": "Meat & Seafood", "image": null, "status": "need" },
+
+    { "name": "Unsalted Butter", "category": "Dairy & Fridge", "image": null, "status": "need" },
 
     { "name": "Egg Whites (liquid carton)", "category": "Baking", "image": null, "status": "need" },
     { "name": "Pumpkin Purée", "category": "Baking", "image": null, "status": "need" },

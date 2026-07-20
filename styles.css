@@ -174,10 +174,32 @@ main {
   font-weight: 600;
 }
 
+.count-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 18px 2px 12px;
+}
+
 .count {
   color: var(--muted);
   font-size: 0.85rem;
-  margin: 18px 2px 12px;
+  margin: 0;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.link-btn:hover {
+  text-decoration: underline;
 }
 
 .grid {
@@ -194,11 +216,23 @@ main {
   box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
-  transition: transform 0.15s ease;
+  transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
 .card:hover {
   transform: translateY(-2px);
+}
+
+.card.checked {
+  opacity: 0.5;
+}
+
+.card.checked .card-name {
+  text-decoration: line-through;
+}
+
+.card.checked .card-img {
+  filter: grayscale(0.6);
 }
 
 .card-img {
@@ -256,6 +290,22 @@ main {
   flex-direction: column;
   gap: 4px;
   flex: 1;
+}
+
+.card-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.card-check input[type="checkbox"] {
+  margin-top: 2px;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+  flex-shrink: 0;
+  cursor: pointer;
 }
 
 .card-name {

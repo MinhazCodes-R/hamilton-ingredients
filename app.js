@@ -9,6 +9,7 @@ const CATEGORY_ICON = {
   "Dairy & Fridge": "🧀",
   "Produce": "🧄",
   "Meat & Seafood": "🥩",
+  "Pantry & Grains": "🍝",
 };
 
 const STORAGE_KEY = "hamilton-ingredients-checked";

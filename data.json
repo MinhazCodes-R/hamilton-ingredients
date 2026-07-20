@@ -1,0 +1,63 @@
+{
+  "updated": "2026-07-20",
+  "categories": [
+    "Oils & Vinegars",
+    "Sauces & Condiments",
+    "Spices & Seasonings",
+    "Baking",
+    "Dairy & Fridge",
+    "Produce"
+  ],
+  "ingredients": [
+    { "name": "Terra Delyssa Organic Extra Virgin Olive Oil", "category": "Oils & Vinegars", "image": "evoo-terra-delyssa.jpg", "status": "have" },
+    { "name": "Colavita Extra Virgin Olive Oil", "category": "Oils & Vinegars", "qty": "1L", "image": "evoo-colavita.jpg", "status": "have" },
+    { "name": "British Class Coconut Oil", "category": "Oils & Vinegars", "qty": "500mL", "image": "coconut-oil.jpg", "status": "have" },
+    { "name": "Kikkoman Seasoned Rice Vinegar", "category": "Oils & Vinegars", "qty": "296mL", "image": "seasoned-rice-vinegar.jpg", "status": "have" },
+
+    { "name": "Huy Fong Sriracha Hot Chili Sauce", "category": "Sauces & Condiments", "qty": "714mL", "image": "sriracha-hot-chili-sauce.jpg", "status": "have", "low": true },
+    { "name": "Bull's-Eye BBQ Sauce – Chicken & Rib Renegade", "category": "Sauces & Condiments", "qty": "425mL", "image": "bbq-sauce.jpg", "status": "have", "low": true },
+    { "name": "Lee Kum Kee Panda Oyster Sauce", "category": "Sauces & Condiments", "qty": "510g", "image": "oyster-sauce.jpg", "status": "have" },
+    { "name": "Kikkoman Less Sodium All-Purpose Soy Sauce", "category": "Sauces & Condiments", "qty": "591mL", "image": "soy-sauce.jpg", "status": "have", "low": true },
+    { "name": "Quesada Mexican Hot Sauce – Chipotle, Mild", "category": "Sauces & Condiments", "qty": "355mL", "image": "mexican-hot-sauce-chipotle.jpg", "status": "have" },
+    { "name": "Aurora Hot Pickled Pepper Rings", "category": "Sauces & Condiments", "qty": "750mL", "image": "hot-pickled-pepper-rings.jpg", "status": "have" },
+    { "name": "Selection Sweet Green Relish", "category": "Sauces & Condiments", "qty": "375mL", "image": "sweet-green-relish.jpg", "status": "have" },
+    { "name": "Great Value Original Table Syrup", "category": "Sauces & Condiments", "qty": "750mL", "image": "table-syrup.jpg", "status": "have" },
+
+    { "name": "Dunya Chili Powder", "category": "Spices & Seasonings", "qty": "450g", "image": "chili-powder.jpg", "status": "have" },
+    { "name": "Supreme Tradition Ground Cinnamon", "category": "Spices & Seasonings", "qty": "64g", "image": "ground-cinnamon.jpg", "status": "have" },
+    { "name": "Irresistibles Whole Black Peppercorns", "category": "Spices & Seasonings", "qty": "170g", "image": "whole-black-peppercorns.jpg", "status": "have" },
+    { "name": "Venetian Gold Ground Black Pepper", "category": "Spices & Seasonings", "qty": "40g", "image": "ground-black-pepper.jpg", "status": "have" },
+    { "name": "Supreme Tradition Italian Seasoning", "category": "Spices & Seasonings", "qty": "35g", "image": "italian-seasoning.jpg", "status": "have" },
+    { "name": "Supreme Tradition Oregano Leaves", "category": "Spices & Seasonings", "qty": "35g", "image": "oregano-leaves.jpg", "status": "have" },
+    { "name": "Great Value Basil Leaves", "category": "Spices & Seasonings", "qty": "40g", "image": "basil-leaves.jpg", "status": "have" },
+    { "name": "Venetian Gold No-Salt-Added Steak Seasoning", "category": "Spices & Seasonings", "qty": "85g", "image": "steak-seasoning.jpg", "status": "have" },
+    { "name": "Arm & Hammer Baking Soda", "category": "Spices & Seasonings", "qty": "500g", "image": "baking-soda.jpg", "status": "have" },
+    { "name": "Unlabeled jar, white granular (salt or sugar)", "category": "Spices & Seasonings", "image": "unlabeled-white-jar.jpg", "status": "have", "note": "Relabel once confirmed" },
+
+    { "name": "Vanilla Extract", "category": "Baking", "image": null, "status": "have" },
+
+    { "name": "Astro Original Balkan Yogurt, 2% Nature", "category": "Dairy & Fridge", "qty": "750g", "image": "balkan-yogurt.jpg", "status": "have" },
+    { "name": "Nonfat Greek Yogurt", "category": "Dairy & Fridge", "image": null, "status": "have" },
+    { "name": "Liberté Kéfir, Plain, 1%", "category": "Dairy & Fridge", "qty": "1L", "image": "kefir.jpg", "status": "have" },
+    { "name": "Selection Light Feta Cheese in brine", "category": "Dairy & Fridge", "image": "light-feta-cheese.jpg", "status": "have" },
+    { "name": "Selection Light Cream Cheese Product, Spreadable", "category": "Dairy & Fridge", "qty": "227g", "image": "light-cream-cheese.jpg", "status": "have" },
+    { "name": "Irresistibles Kalamata Sliced Olives", "category": "Dairy & Fridge", "qty": "375mL", "image": "kalamata-sliced-olives.jpg", "status": "have" },
+
+    { "name": "Garlic", "category": "Produce", "qty": "bag", "image": "garlic-1.jpg", "status": "have" },
+    { "name": "Garlic", "category": "Produce", "qty": "5 pcs, bag", "image": "garlic-2.jpg", "status": "have" },
+    { "name": "Onion(s)", "category": "Produce", "image": "onion.jpg", "status": "have" },
+    { "name": "Bean Sprouts (Sprout King)", "category": "Produce", "image": "bean-sprouts.jpg", "status": "have" },
+
+    { "name": "Egg Whites (liquid carton)", "category": "Baking", "image": null, "status": "need" },
+    { "name": "Pumpkin Purée", "category": "Baking", "image": null, "status": "need" },
+    { "name": "Unsweetened Almond Milk", "category": "Baking", "image": null, "status": "need" },
+    { "name": "All-Purpose Flour", "category": "Baking", "image": null, "status": "need" },
+    { "name": "Oat Flour", "category": "Baking", "image": null, "status": "need" },
+    { "name": "Casein Protein Powder", "category": "Baking", "image": null, "status": "need" },
+    { "name": "Whey/Casein Blend Protein Powder", "category": "Baking", "image": null, "status": "need" },
+    { "name": "Granulated Sugar Substitute", "category": "Baking", "image": null, "status": "need" },
+    { "name": "Black or Dark Cocoa Powder", "category": "Baking", "image": null, "status": "need" },
+    { "name": "Baking Powder", "category": "Baking", "image": null, "status": "need" },
+    { "name": "Chocolate Chips", "category": "Baking", "image": null, "status": "need" }
+  ]
+}

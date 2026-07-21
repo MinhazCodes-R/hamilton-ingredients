@@ -49,12 +49,12 @@
     { "name": "Garlic", "category": "Produce", "qty": "5 pcs, bag", "image": "garlic-2.jpg", "status": "have" },
     { "name": "Onion(s)", "category": "Produce", "image": "onion.jpg", "status": "have" },
     { "name": "Bean Sprouts (Sprout King)", "category": "Produce", "image": "bean-sprouts.jpg", "status": "have" },
-    { "name": "Zucchini", "category": "Produce", "image": null, "status": "need" },
+    { "name": "Zucchini", "category": "Produce", "image": null, "status": "have" },
 
-    { "name": "Steak (sirloin or ribeye)", "category": "Meat & Seafood", "image": null, "status": "need" },
+    { "name": "Steak (sirloin or ribeye)", "category": "Meat & Seafood", "image": null, "status": "have" },
     { "name": "Chicken Breast", "category": "Meat & Seafood", "image": null, "status": "need" },
 
-    { "name": "Unsalted Butter", "category": "Dairy & Fridge", "image": null, "status": "need" },
+    { "name": "Unsalted Butter", "category": "Dairy & Fridge", "image": null, "status": "have" },
     { "name": "Heavy Cream (or milk)", "category": "Dairy & Fridge", "image": null, "status": "need" },
     { "name": "Parmesan Cheese", "category": "Dairy & Fridge", "image": null, "status": "need" },
 

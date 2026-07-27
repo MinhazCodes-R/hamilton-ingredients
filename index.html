@@ -31,7 +31,16 @@
       <button id="clear-checked" class="link-btn" hidden>Clear checked-off items</button>
     </div>
 
-    <div class="grid" id="grid"></div>
+    <div id="sections">
+      <section class="status-section" id="section-need">
+        <h2 class="section-title need">🛒 Need to Buy <span class="section-count" id="need-count"></span></h2>
+        <div class="grid" id="grid-need"></div>
+      </section>
+      <section class="status-section" id="section-have">
+        <h2 class="section-title have">✅ Have in Kitchen <span class="section-count" id="have-count"></span></h2>
+        <div class="grid" id="grid-have"></div>
+      </section>
+    </div>
     <p class="empty" id="empty-msg" hidden>No ingredients match your filters.</p>
   </main>
 
@@ -84,23 +93,34 @@
     { "name": "Nonfat Greek Yogurt", "category": "Dairy & Fridge", "image": null, "status": "have" },
     { "name": "Liberté Kéfir, Plain, 1%", "category": "Dairy & Fridge", "qty": "1L", "image": "kefir.jpg", "status": "have" },
     { "name": "Selection Light Feta Cheese in brine", "category": "Dairy & Fridge", "image": "light-feta-cheese.jpg", "status": "have" },
-    { "name": "Selection Light Cream Cheese Product, Spreadable", "category": "Dairy & Fridge", "qty": "227g", "image": "light-cream-cheese.jpg", "status": "have" },
+    { "name": "Selection Light Cream Cheese Product, Spreadable", "category": "Dairy & Fridge", "qty": "227g", "image": "light-cream-cheese.jpg", "status": "need" },
     { "name": "Irresistibles Kalamata Sliced Olives", "category": "Dairy & Fridge", "qty": "375mL", "image": "kalamata-sliced-olives.jpg", "status": "have" },
 
     { "name": "Garlic", "category": "Produce", "qty": "bag", "image": "garlic-1.jpg", "status": "have" },
     { "name": "Garlic", "category": "Produce", "qty": "5 pcs, bag", "image": "garlic-2.jpg", "status": "have" },
-    { "name": "Onion(s)", "category": "Produce", "image": "onion.jpg", "status": "have" },
+    { "name": "Onion(s)", "category": "Produce", "image": "onion.jpg", "status": "need" },
     { "name": "Bean Sprouts (Sprout King)", "category": "Produce", "image": "bean-sprouts.jpg", "status": "have" },
     { "name": "Zucchini", "category": "Produce", "image": null, "status": "have" },
+    { "name": "Bell Peppers", "category": "Produce", "image": null, "status": "need" },
+    { "name": "Carrots", "category": "Produce", "image": null, "status": "need" },
+    { "name": "Snap Peas", "category": "Produce", "image": null, "status": "need" },
+    { "name": "Broccoli", "category": "Produce", "image": null, "status": "need" },
+    { "name": "Mushrooms", "category": "Produce", "image": null, "status": "need" },
+    { "name": "Spinach", "category": "Produce", "image": null, "status": "need" },
 
     { "name": "Steak (sirloin or ribeye)", "category": "Meat & Seafood", "image": null, "status": "need" },
-    { "name": "Chicken Breast", "category": "Meat & Seafood", "image": null, "status": "need" },
+    { "name": "Chicken Breast", "category": "Meat & Seafood", "image": null, "status": "have" },
+    { "name": "Ground Beef", "category": "Meat & Seafood", "image": null, "status": "have" },
 
     { "name": "Unsalted Butter", "category": "Dairy & Fridge", "image": null, "status": "have" },
     { "name": "Heavy Cream (or milk)", "category": "Dairy & Fridge", "image": null, "status": "need" },
     { "name": "Parmesan Cheese", "category": "Dairy & Fridge", "image": null, "status": "need" },
+    { "name": "Eggs (whole)", "category": "Dairy & Fridge", "image": null, "status": "need" },
 
-    { "name": "Fettuccine Pasta", "category": "Pantry & Grains", "image": null, "status": "need" },
+    { "name": "Fettuccine Pasta", "category": "Pantry & Grains", "image": null, "status": "have" },
+    { "name": "Rice Noodles", "category": "Pantry & Grains", "image": null, "status": "have" },
+    { "name": "Tomato Sauce", "category": "Pantry & Grains", "image": null, "status": "need" },
+    { "name": "Breadcrumbs", "category": "Pantry & Grains", "image": null, "status": "have" },
 
     { "name": "Parsley (dried or fresh)", "category": "Spices & Seasonings", "image": null, "status": "have" },
     { "name": "Chili Flakes (crushed red pepper)", "category": "Spices & Seasonings", "image": null, "status": "have" },

@@ -40,7 +40,13 @@ const state = {
   query: "",
 };
 
-const grid = document.getElementById("grid");
+const sections = document.getElementById("sections");
+const gridNeed = document.getElementById("grid-need");
+const gridHave = document.getElementById("grid-have");
+const sectionNeed = document.getElementById("section-need");
+const sectionHave = document.getElementById("section-have");
+const needCount = document.getElementById("need-count");
+const haveCount = document.getElementById("have-count");
 const emptyMsg = document.getElementById("empty-msg");
 const resultCount = document.getElementById("result-count");
 const totalCount = document.getElementById("total-count");
@@ -136,7 +142,17 @@ function cardHTML(item) {
 
 function render() {
   const filtered = data.ingredients.filter(matchesFilters);
-  grid.innerHTML = filtered.map(cardHTML).join("");
+  const needItems = filtered.filter((i) => i.status === "need");
+  const haveItems = filtered.filter((i) => i.status === "have");
+
+  gridNeed.innerHTML = needItems.map(cardHTML).join("");
+  gridHave.innerHTML = haveItems.map(cardHTML).join("");
+
+  sectionNeed.hidden = needItems.length === 0;
+  sectionHave.hidden = haveItems.length === 0;
+  needCount.textContent = needItems.length ? `(${needItems.length})` : "";
+  haveCount.textContent = haveItems.length ? `(${haveItems.length})` : "";
+
   emptyMsg.hidden = filtered.length !== 0;
 
   const checkedInView = filtered.filter((i) => checked.has(i.id)).length;
@@ -149,7 +165,7 @@ function render() {
   clearCheckedBtn.hidden = !anyCheckedAtAll;
 }
 
-grid.addEventListener("change", (e) => {
+sections.addEventListener("change", (e) => {
   const box = e.target.closest("input[type=checkbox][data-id]");
   if (!box) return;
   const id = box.dataset.id;
@@ -159,7 +175,7 @@ grid.addEventListener("change", (e) => {
     checked.delete(id);
   }
   saveChecked();
-  const card = grid.querySelector(`.card[data-id="${id}"]`);
+  const card = sections.querySelector(`.card[data-id="${id}"]`);
   if (card) card.classList.toggle("checked", box.checked);
   render();
 });

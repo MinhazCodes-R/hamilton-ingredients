@@ -51,7 +51,7 @@
     { "name": "Bean Sprouts (Sprout King)", "category": "Produce", "image": "bean-sprouts.jpg", "status": "have" },
     { "name": "Zucchini", "category": "Produce", "image": null, "status": "have" },
 
-    { "name": "Steak (sirloin or ribeye)", "category": "Meat & Seafood", "image": null, "status": "have" },
+    { "name": "Steak (sirloin or ribeye)", "category": "Meat & Seafood", "image": null, "status": "need" },
     { "name": "Chicken Breast", "category": "Meat & Seafood", "image": null, "status": "need" },
 
     { "name": "Unsalted Butter", "category": "Dairy & Fridge", "image": null, "status": "have" },

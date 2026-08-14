@@ -12,6 +12,37 @@ const CATEGORY_ICON = {
   "Pantry & Grains": "🍝",
 };
 
+// Falls back to CATEGORY_ICON for anything not listed here.
+const ITEM_ICON = {
+  "Garlic": "🧄",
+  "Onion(s)": "🧅",
+  "Jalapeño": "🌶️",
+  "Tomato (fresh)": "🍅",
+  "Fresh Cilantro": "🌿",
+  "Bell Peppers": "🫑",
+  "Beef Stew Meat (cubed)": "🥩",
+  "Shredded Cheese (chihuahua or mozzarella)": "🧀",
+  "Tomato Paste": "🥫",
+  "Beef Stock": "🍲",
+  "Tortillas (or rice)": "🫓",
+  "Ground Cumin": "🧂",
+  "Ground Coriander": "🧂",
+  "Bean Sprouts (Sprout King)": "🌱",
+  "Rice Noodles": "🍜",
+  "Breadcrumbs": "🍞",
+  "Unsalted Butter": "🧈",
+  "Eggs (whole)": "🥚",
+  "Egg Whites (liquid carton)": "🥚",
+  "Pumpkin Purée": "🎃",
+  "Chocolate Chips": "🍫",
+  "Black or Dark Cocoa Powder": "🍫",
+  "Vanilla Extract": "🍦",
+  "Chili Flakes (crushed red pepper)": "🌶️",
+  "Parsley (dried or fresh)": "🌿",
+  "Paprika": "🌶️",
+  "Garlic Powder": "🧄",
+};
+
 const STORAGE_KEY = "hamilton-ingredients-checked";
 
 // Give every ingredient a stable id so checked state survives re-renders
@@ -117,7 +148,7 @@ function cardHTML(item) {
 
   const imgBlock = item.image
     ? `<img src="images/${item.image}" alt="${item.name}" loading="lazy" />`
-    : `<div class="card-img placeholder">${CATEGORY_ICON[item.category] || "🍽️"}</div>`;
+    : `<div class="card-img placeholder">${ITEM_ICON[item.name] || CATEGORY_ICON[item.category] || "🍽️"}</div>`;
 
   return `
     <div class="card ${isChecked ? "checked" : ""}" data-id="${item.id}">

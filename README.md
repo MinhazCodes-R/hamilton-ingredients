@@ -11,6 +11,23 @@ Open `index.html` directly in a browser, or enable **GitHub Pages** for this rep
 - `index.html` / `styles.css` / `app.js` — a searchable, filterable gallery of every ingredient, each scoped to its own photo
 - `images/` — one photo per ingredient (resized/compressed from the original kitchen photos)
 - `data.json` — the same ingredient data in plain JSON, kept in sync with the copy embedded in `index.html`
+- `recipes.json` — recipes, each ingredient cross-referenced to an entry in `data.json`
+- `recipes/` — the same recipes as plain markdown, readable straight from GitHub
+
+## Recipes
+
+The site shows each recipe above the inventory. Every ingredient line is marked
+against what's actually in the kitchen — ✅ in stock, 🛒 on the shopping list —
+and the header counts how many you still need, so you can tell at a glance
+whether you can cook it tonight. A recipe with nothing left to buy opens
+expanded.
+
+To add one: append an entry to `recipes.json`, mirror it into the
+`<script id="recipe-data">` block in `index.html`, and set each ingredient's
+`item` field to the exact `name` of the matching entry in `data.json`. An
+ingredient whose `item` doesn't match anything tracked shows as ❔ rather than
+silently claiming to be in stock. Drop a markdown copy in `recipes/` for
+reading on GitHub.
 
 ## Updating the list
 

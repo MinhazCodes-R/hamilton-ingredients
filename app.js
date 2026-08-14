@@ -225,3 +225,90 @@ search.addEventListener("input", (e) => {
 buildCategoryChips();
 buildStatusTabs();
 render();
+
+/* ---------- Recipes ---------- */
+
+const recipeData = JSON.parse(
+  document.getElementById("recipe-data").textContent
+);
+
+const statusByName = new Map(
+  data.ingredients.map((i) => [i.name, i])
+);
+
+function escapeHTML(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  }[c]));
+}
+
+function recipeIngredientHTML(ing) {
+  const inv = ing.item ? statusByName.get(ing.item) : null;
+  // An ingredient the inventory doesn't track at all shouldn't claim to be
+  // in stock — mark it unknown rather than silently showing "Have".
+  const state = !inv ? "unknown" : inv.status === "need" ? "need" : "have";
+  const mark = { have: "✅", need: "🛒", unknown: "❔" }[state];
+  const title = { have: "In stock", need: "On the shopping list", unknown: "Not tracked" }[state];
+
+  return `
+    <li class="r-ing ${state}">
+      <span class="r-mark" title="${title}">${mark}</span>
+      <span class="r-amount">${escapeHTML(ing.amount)}</span>
+      <span class="r-label">
+        ${escapeHTML(ing.label)}
+        ${ing.note ? `<em class="r-note">${escapeHTML(ing.note)}</em>` : ""}
+      </span>
+    </li>`;
+}
+
+function recipeHTML(r) {
+  const missing = r.ingredients.filter((i) => {
+    const inv = i.item ? statusByName.get(i.item) : null;
+    return inv && inv.status === "need";
+  }).length;
+
+  const readiness = missing === 0
+    ? `<span class="r-ready have">Ready to cook</span>`
+    : `<span class="r-ready need">${missing} still to buy</span>`;
+
+  return `
+    <details class="recipe" ${missing === 0 ? "open" : ""}>
+      <summary>
+        <span class="r-icon">${r.icon}</span>
+        <span class="r-title">${escapeHTML(r.name)}</span>
+        ${readiness}
+      </summary>
+      <div class="recipe-body">
+        <p class="r-blurb">${escapeHTML(r.blurb)}</p>
+        <dl class="r-times">
+          <div><dt>Prep</dt><dd>${escapeHTML(r.prep)}</dd></div>
+          <div><dt>Cook</dt><dd>${escapeHTML(r.cook)}</dd></div>
+          <div><dt>Total</dt><dd>${escapeHTML(r.total)}</dd></div>
+          <div><dt>Yield</dt><dd>${escapeHTML(r.yield)}</dd></div>
+        </dl>
+
+        <h3 class="r-h">Ingredients</h3>
+        <ul class="r-ings">${r.ingredients.map(recipeIngredientHTML).join("")}</ul>
+
+        <h3 class="r-h">Instructions</h3>
+        <ol class="r-steps">
+          ${r.steps.map((s) => `<li>${escapeHTML(s)}</li>`).join("")}
+        </ol>
+
+        ${r.notes && r.notes.length
+          ? `<h3 class="r-h">Notes</h3>
+             <ul class="r-notes">${r.notes.map((n) => `<li>${escapeHTML(n)}</li>`).join("")}</ul>`
+          : ""}
+      </div>
+    </details>`;
+}
+
+function renderRecipes() {
+  const host = document.getElementById("recipes");
+  if (!host || !recipeData.recipes.length) return;
+  host.innerHTML =
+    `<h2 class="section-title recipes">🍲 Recipes</h2>` +
+    recipeData.recipes.map(recipeHTML).join("");
+}
+
+renderRecipes();

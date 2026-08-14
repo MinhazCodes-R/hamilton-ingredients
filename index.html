@@ -15,6 +15,8 @@
   </header>
 
   <main>
+    <section id="recipes"></section>
+
     <div class="controls">
       <input id="search" type="search" placeholder="Search ingredients…" autocomplete="off" />
       <div class="tabs" id="status-tabs">
@@ -129,6 +131,55 @@
     { "name": "Black or Dark Cocoa Powder", "category": "Baking", "image": null, "status": "have" },
     { "name": "Baking Powder", "category": "Baking", "image": null, "status": "have" },
     { "name": "Chocolate Chips", "category": "Baking", "image": null, "status": "have" }
+  ]
+}
+  </script>
+  <script id="recipe-data" type="application/json">
+{
+  "recipes": [
+    {
+      "id": "carne-guisada",
+      "name": "Carne Guisada",
+      "icon": "🍲",
+      "blurb": "Mexican-style braised beef stew. The beef goes in cubed and comes out fork-tender.",
+      "prep": "10 Min",
+      "cook": "30 Min",
+      "total": "40 Min",
+      "yield": "3-4",
+      "source": "recipes/carne-guisada.md",
+      "ingredients": [
+        { "amount": "1 Tbsp", "label": "Oil", "item": "Colavita Extra Virgin Olive Oil" },
+        { "amount": "1 lb", "label": "Cubed beef stew meat", "item": "Beef Stew Meat (cubed)" },
+        { "amount": "1 Tbsp", "label": "Flour", "item": "All-Purpose Flour" },
+        { "amount": "1 Tbsp", "label": "Tomato paste", "item": "Tomato Paste" },
+        { "amount": "1/2", "label": "Onion, diced", "item": "Onion(s)" },
+        { "amount": "1/2", "label": "Green bell pepper, diced", "item": "Bell Peppers" },
+        { "amount": "1 small", "label": "Jalapeño, finely diced", "item": "Jalapeño", "note": "Seeds removed if you want it less spicy" },
+        { "amount": "1", "label": "Tomato, diced", "item": "Tomato (fresh)" },
+        { "amount": "4 cloves", "label": "Garlic, diced", "item": "Garlic" },
+        { "amount": "1/2 tsp", "label": "Chipotle chili powder", "item": "Dunya Chili Powder", "note": "Sub: chili powder + a spoon of Quesada chipotle hot sauce" },
+        { "amount": "1/2 tsp", "label": "Paprika", "item": "Paprika" },
+        { "amount": "1/4 tsp", "label": "Black pepper", "item": "Venetian Gold Ground Black Pepper" },
+        { "amount": "1/2 tsp", "label": "Salt", "item": "Unlabeled jar, white granular (salt or sugar)", "note": "Taste the jar before using — it may be sugar" },
+        { "amount": "1/4 tsp", "label": "Cumin", "item": "Ground Cumin" },
+        { "amount": "1/4 tsp", "label": "Coriander", "item": "Ground Coriander" },
+        { "amount": "1/2 tsp", "label": "Oregano", "item": "Supreme Tradition Oregano Leaves" },
+        { "amount": "1 cup", "label": "Beef stock", "item": "Beef Stock" },
+        { "amount": "1/4 cup", "label": "Fresh cilantro, finely chopped", "item": "Fresh Cilantro" },
+        { "amount": "1/2 cup", "label": "Shredded chihuahua or mozzarella cheese", "item": "Shredded Cheese (chihuahua or mozzarella)" },
+        { "amount": "to serve", "label": "Tortillas, or rice", "item": "Tortillas (or rice)" }
+      ],
+      "steps": [
+        "Heat a large skillet over medium-high heat and add in the oil and cubed beef. Sear the beef for about 2-3 minutes on all sides until they are golden brown. Sprinkle in the flour over all the beef and add the tomato paste. Stir to coat the beef evenly and reduce the heat to medium.",
+        "Add in the diced onion, bell pepper, jalapeño, tomato and garlic and cook, stirring, for about 3-4 minutes until the onions and peppers have softened. Add in the chipotle chili powder, paprika, black pepper, salt, cumin, coriander and oregano and stir to combine.",
+        "Add the beef stock to the beef mixture and bring to a simmer. Reduce the heat to medium-low and cover the pan with a tight fitting lid. Cook for 20-30 minutes until the beef is super tender and easily shredded with a fork, the liquid should be reduced as well.",
+        "Remove the pan from the heat and top with shredded cheese and fresh chopped cilantro. Serve with tortillas for dipping or spoon over rice."
+      ],
+      "notes": [
+        "Don't rush the simmer. If the beef isn't fork-shreddable at 30 minutes, add a splash more stock and keep going — stew meat forgives long cooking, never short cooking.",
+        "Ground beef is not a substitute. It won't shred; the cubed stew meat is what makes the dish."
+      ]
+    }
   ]
 }
   </script>

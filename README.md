@@ -43,6 +43,10 @@ Any `need` item whose `trip` matches `CURRENT_TRIP` in `app.js` is pulled out of
 general shopping list into its own section at the top of the page. To start a new trip,
 tag the items and update `CURRENT_TRIP`.
 
+Photos for the Shopping Aug 20 items are freely-licensed Wikimedia Commons
+stock, not kitchen photos — see `images/CREDITS.md`. Swap them for real photos
+once the items are home.
+
 ## Filters in the UI
 
 - **In Stock / Shopping List / Running Low** tabs

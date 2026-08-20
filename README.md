@@ -43,9 +43,12 @@ Any `need` item whose `trip` matches `CURRENT_TRIP` in `app.js` is pulled out of
 general shopping list into its own section at the top of the page. To start a new trip,
 tag the items and update `CURRENT_TRIP`.
 
-Photos for the Shopping Aug 20 items are freely-licensed Wikimedia Commons
-stock, not kitchen photos — see `images/CREDITS.md`. Swap them for real photos
-once the items are home.
+Every ingredient now has a photo. The ones that were never photographed in the
+kitchen use freely-licensed stand-ins from Wikimedia Commons — all of them are
+listed in `images/CREDITS.md`, and several are share-alike. They show the right
+ingredient, not the specific product on the shelf, so replace any of them with a
+real photo when you take one: same filename in `images/`, then drop its line
+from `CREDITS.md`.
 
 ## Filters in the UI
 

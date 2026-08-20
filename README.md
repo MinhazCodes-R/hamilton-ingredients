@@ -36,6 +36,13 @@ reading on GitHub.
 3. Set `"status": "have"` or `"need"`, and add `"low": true` for anything running out.
 4. Commit and push.
 
+## Shopping trips
+
+Items for one specific grocery run get a `"trip"` field (e.g. `"trip": "Shopping Aug 20"`).
+Any `need` item whose `trip` matches `CURRENT_TRIP` in `app.js` is pulled out of the
+general shopping list into its own section at the top of the page. To start a new trip,
+tag the items and update `CURRENT_TRIP`.
+
 ## Filters in the UI
 
 - **In Stock / Shopping List / Running Low** tabs

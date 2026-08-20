@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-14",
+  "updated": "2026-08-20",
   "categories": [
     "Oils & Vinegars",
     "Sauces & Condiments",
@@ -61,7 +61,6 @@
     { "name": "Beef Stock", "category": "Pantry & Grains", "qty": "1 cup needed", "image": null, "status": "need", "note": "For carne guisada" },
     { "name": "Tortillas (or rice)", "category": "Pantry & Grains", "image": null, "status": "need", "note": "For carne guisada" },
 
-    { "name": "Parsley (dried or fresh)", "category": "Spices & Seasonings", "image": null, "status": "have" },
     { "name": "Chili Flakes (crushed red pepper)", "category": "Spices & Seasonings", "image": null, "status": "have" },
     { "name": "Garlic Powder", "category": "Spices & Seasonings", "image": null, "status": "have" },
     { "name": "Paprika", "category": "Spices & Seasonings", "image": null, "status": "have" },
@@ -77,6 +76,13 @@
     { "name": "Granulated Sugar Substitute", "category": "Baking", "image": null, "status": "have" },
     { "name": "Black or Dark Cocoa Powder", "category": "Baking", "image": null, "status": "have" },
     { "name": "Baking Powder", "category": "Baking", "image": null, "status": "have" },
-    { "name": "Chocolate Chips", "category": "Baking", "image": null, "status": "have" }
+    { "name": "Chocolate Chips", "category": "Baking", "image": null, "status": "have" },
+
+    { "name": "Fresh Parsley", "category": "Produce", "image": "fresh-parsley.svg", "status": "need", "trip": "Shopping Aug 20" },
+    { "name": "Fresh Basil", "category": "Produce", "image": "fresh-basil.svg", "status": "need", "trip": "Shopping Aug 20" },
+    { "name": "Parmesan Cheese", "category": "Dairy & Fridge", "image": "parmesan.svg", "status": "need", "trip": "Shopping Aug 20" },
+    { "name": "Ground Beef", "category": "Meat & Seafood", "qty": "1 lb", "image": "ground-beef.svg", "status": "need", "trip": "Shopping Aug 20" },
+    { "name": "Celery", "category": "Produce", "qty": "1 stalk", "image": "celery.svg", "status": "need", "trip": "Shopping Aug 20" },
+    { "name": "Tomato Sauce", "category": "Pantry & Grains", "image": "tomato-sauce.svg", "status": "need", "trip": "Shopping Aug 20" }
   ]
 }

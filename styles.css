@@ -220,6 +220,10 @@ main {
   color: var(--accent);
 }
 
+.section-title.trip {
+  color: var(--accent);
+}
+
 .section-title.have {
   color: var(--green);
 }

@@ -36,6 +36,20 @@ reading on GitHub.
 3. Set `"status": "have"` or `"need"`, and add `"low": true` for anything running out.
 4. Commit and push.
 
+## Shopping trips
+
+Items for one specific grocery run get a `"trip"` field (e.g. `"trip": "Shopping Aug 20"`).
+Any `need` item whose `trip` matches `CURRENT_TRIP` in `app.js` is pulled out of the
+general shopping list into its own section at the top of the page. To start a new trip,
+tag the items and update `CURRENT_TRIP`.
+
+Every ingredient now has a photo. The ones that were never photographed in the
+kitchen use freely-licensed stand-ins from Wikimedia Commons — all of them are
+listed in `images/CREDITS.md`, and several are share-alike. They show the right
+ingredient, not the specific product on the shelf, so replace any of them with a
+real photo when you take one: same filename in `images/`, then drop its line
+from `CREDITS.md`.
+
 ## Filters in the UI
 
 - **In Stock / Shopping List / Running Low** tabs

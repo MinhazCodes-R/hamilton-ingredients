@@ -41,9 +41,18 @@ const ITEM_ICON = {
   "Parsley (dried or fresh)": "🌿",
   "Paprika": "🌶️",
   "Garlic Powder": "🧄",
+  "Fresh Parsley": "🌿",
+  "Fresh Basil": "🌿",
+  "Parmesan Cheese": "🧀",
+  "Ground Beef": "🥩",
+  "Celery": "🥬",
+  "Tomato Sauce": "🥫",
 };
 
 const STORAGE_KEY = "hamilton-ingredients-checked";
+
+// Items whose `trip` matches this are pulled into their own section.
+const CURRENT_TRIP = "Shopping Aug 20";
 
 // Give every ingredient a stable id so checked state survives re-renders
 // and page reloads, even if the list order changes slightly.
@@ -75,6 +84,10 @@ const sections = document.getElementById("sections");
 const gridNeed = document.getElementById("grid-need");
 const gridHave = document.getElementById("grid-have");
 const sectionNeed = document.getElementById("section-need");
+const gridTrip = document.getElementById("grid-trip");
+const sectionTrip = document.getElementById("section-trip");
+const tripTitle = document.getElementById("trip-title");
+const tripCount = document.getElementById("trip-count");
 const sectionHave = document.getElementById("section-have");
 const needCount = document.getElementById("need-count");
 const haveCount = document.getElementById("have-count");
@@ -173,10 +186,18 @@ function cardHTML(item) {
 
 function render() {
   const filtered = data.ingredients.filter(matchesFilters);
-  const needItems = filtered.filter((i) => i.status === "need");
+  // Items tagged for a specific shopping trip get their own section above
+  // the general shopping list, so one run's items stay together.
+  const tripItems = filtered.filter((i) => i.status === "need" && i.trip === CURRENT_TRIP);
+  const needItems = filtered.filter((i) => i.status === "need" && i.trip !== CURRENT_TRIP);
   const haveItems = filtered.filter((i) => i.status === "have");
 
+  gridTrip.innerHTML = tripItems.map(cardHTML).join("");
   gridNeed.innerHTML = needItems.map(cardHTML).join("");
+
+  sectionTrip.hidden = tripItems.length === 0;
+  tripTitle.textContent = `🛒 ${CURRENT_TRIP}`;
+  tripCount.textContent = tripItems.length ? `(${tripItems.length})` : "";
   gridHave.innerHTML = haveItems.map(cardHTML).join("");
 
   sectionNeed.hidden = needItems.length === 0;

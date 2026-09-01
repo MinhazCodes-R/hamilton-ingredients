@@ -1,0 +1,32 @@
+{
+  "updated": "2026-09-01",
+  "entries": [
+    {
+      "id": "2026-09-01-honey-garlic-beef-fried-rice",
+      "date": "2026-09-01",
+      "meal": "Honey Garlic Beef Fried Rice",
+      "type": "dinner",
+      "servings": 5,
+      "perServing": { "calories": 900, "protein": 41, "carbs": 69, "fat": 49 },
+      "ingredients": [
+        "1kg ground beef",
+        "300g jasmine rice",
+        "1 brown onion",
+        "1 red bell pepper",
+        "1 large carrot",
+        "300g broccolini",
+        "spring onion",
+        "5 cloves garlic",
+        "15g ginger",
+        "100ml low sodium soy sauce",
+        "40ml rice vinegar",
+        "70g brown sugar",
+        "15ml toasted sesame oil",
+        "30ml peanut oil",
+        "1.5g chili flakes"
+      ],
+      "notes": "Fridge up to 3 days / freezer 4 months. Estimated ~900 cal per container, ~300 over the 600-cal dinner target — mostly from the peanut oil, sesame oil, and brown sugar. Try halving the peanut oil (~15ml) and brown sugar (~40g) next time to bring it closer to target.",
+      "recipeLink": null
+    }
+  ]
+}

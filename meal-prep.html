@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Meal Prep Log</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <h1>🥡 Meal Prep Log</h1>
+      <p class="subtitle">What got prepped, per week — updated <span id="updated-date"></span></p>
+      <nav class="page-nav">
+        <a href="index.html">🍳 Ingredients</a>
+        <a href="meal-prep.html" class="active">🥡 Meal Prep Log</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="count-row">
+      <p class="count"><span id="entry-count"></span> logged meal preps</p>
+    </div>
+
+    <div id="weeks"></div>
+    <p class="empty" id="empty-msg" hidden>No meal preps logged yet — add one to <code>meal-prep-log.json</code>.</p>
+  </main>
+
+  <footer>
+    <p>Container checkboxes are saved in this browser only (localStorage), not synced across devices.</p>
+  </footer>
+
+  <script id="meal-prep-data" type="application/json">
+{
+  "updated": "2026-09-01",
+  "entries": [
+    {
+      "id": "2026-09-01-honey-garlic-beef-fried-rice",
+      "date": "2026-09-01",
+      "meal": "Honey Garlic Beef Fried Rice",
+      "type": "dinner",
+      "servings": 5,
+      "perServing": { "calories": 900, "protein": 41, "carbs": 69, "fat": 49 },
+      "ingredients": [
+        "1kg ground beef",
+        "300g jasmine rice",
+        "1 brown onion",
+        "1 red bell pepper",
+        "1 large carrot",
+        "300g broccolini",
+        "spring onion",
+        "5 cloves garlic",
+        "15g ginger",
+        "100ml low sodium soy sauce",
+        "40ml rice vinegar",
+        "70g brown sugar",
+        "15ml toasted sesame oil",
+        "30ml peanut oil",
+        "1.5g chili flakes"
+      ],
+      "notes": "Fridge up to 3 days / freezer 4 months. Estimated ~900 cal per container, ~300 over the 600-cal dinner target — mostly from the peanut oil, sesame oil, and brown sugar. Try halving the peanut oil (~15ml) and brown sugar (~40g) next time to bring it closer to target.",
+      "recipeLink": null
+    }
+  ]
+}
+  </script>
+  <script src="meal-prep.js"></script>
+</body>
+</html>

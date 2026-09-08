@@ -19,6 +19,8 @@
   </header>
 
   <main>
+    <section id="recipes"></section>
+
     <div class="controls">
       <input id="search" type="search" placeholder="Search ingredients…" autocomplete="off" />
       <div class="tabs" id="status-tabs">
@@ -36,6 +38,10 @@
     </div>
 
     <div id="sections">
+      <section class="status-section" id="section-trip" hidden>
+        <h2 class="section-title trip"><span id="trip-title"></span> <span class="section-count" id="trip-count"></span></h2>
+        <div class="grid" id="grid-trip"></div>
+      </section>
       <section class="status-section" id="section-need">
         <h2 class="section-title need">🛒 Need to Buy <span class="section-count" id="need-count"></span></h2>
         <div class="grid" id="grid-need"></div>
@@ -54,7 +60,7 @@
 
   <script id="ingredient-data" type="application/json">
 {
-  "updated": "2026-07-20",
+  "updated": "2026-08-20",
   "categories": [
     "Oils & Vinegars",
     "Sauces & Condiments",
@@ -91,57 +97,103 @@
     { "name": "Arm & Hammer Baking Soda", "category": "Spices & Seasonings", "qty": "500g", "image": "baking-soda.jpg", "status": "have" },
     { "name": "Unlabeled jar, white granular (salt or sugar)", "category": "Spices & Seasonings", "image": "unlabeled-white-jar.jpg", "status": "have", "note": "Relabel once confirmed" },
 
-    { "name": "Vanilla Extract", "category": "Baking", "image": null, "status": "have" },
+    { "name": "Vanilla Extract", "category": "Baking", "image": "vanilla-extract.jpg", "status": "have" },
 
-    { "name": "Astro Original Balkan Yogurt, 2% Nature", "category": "Dairy & Fridge", "qty": "750g", "image": "balkan-yogurt.jpg", "status": "have" },
-    { "name": "Nonfat Greek Yogurt", "category": "Dairy & Fridge", "image": null, "status": "have" },
     { "name": "Liberté Kéfir, Plain, 1%", "category": "Dairy & Fridge", "qty": "1L", "image": "kefir.jpg", "status": "have" },
     { "name": "Selection Light Feta Cheese in brine", "category": "Dairy & Fridge", "image": "light-feta-cheese.jpg", "status": "have" },
-    { "name": "Selection Light Cream Cheese Product, Spreadable", "category": "Dairy & Fridge", "qty": "227g", "image": "light-cream-cheese.jpg", "status": "need" },
     { "name": "Irresistibles Kalamata Sliced Olives", "category": "Dairy & Fridge", "qty": "375mL", "image": "kalamata-sliced-olives.jpg", "status": "have" },
 
-    { "name": "Garlic", "category": "Produce", "qty": "bag", "image": "garlic-1.jpg", "status": "have" },
-    { "name": "Garlic", "category": "Produce", "qty": "5 pcs, bag", "image": "garlic-2.jpg", "status": "have" },
+    { "name": "Garlic", "category": "Produce", "qty": "4 cloves needed", "image": "garlic.jpg", "status": "need", "note": "For carne guisada" },
     { "name": "Onion(s)", "category": "Produce", "image": "onion.jpg", "status": "need" },
+    { "name": "Jalapeño", "category": "Produce", "image": "jalapeno.jpg", "status": "need", "note": "For carne guisada" },
+    { "name": "Tomato (fresh)", "category": "Produce", "image": "tomato-fresh.jpg", "status": "need", "note": "For carne guisada" },
+    { "name": "Fresh Cilantro", "category": "Produce", "image": "fresh-cilantro.jpg", "status": "need", "note": "For carne guisada" },
     { "name": "Bean Sprouts (Sprout King)", "category": "Produce", "image": "bean-sprouts.jpg", "status": "have" },
-    { "name": "Zucchini", "category": "Produce", "image": null, "status": "have" },
-    { "name": "Bell Peppers", "category": "Produce", "image": null, "status": "need" },
-    { "name": "Carrots", "category": "Produce", "image": null, "status": "need" },
-    { "name": "Snap Peas", "category": "Produce", "image": null, "status": "need" },
-    { "name": "Broccoli", "category": "Produce", "image": null, "status": "need" },
-    { "name": "Mushrooms", "category": "Produce", "image": null, "status": "need" },
-    { "name": "Spinach", "category": "Produce", "image": null, "status": "need" },
+    { "name": "Bell Peppers", "category": "Produce", "image": "bell-peppers.jpg", "status": "need" },
 
-    { "name": "Steak (sirloin or ribeye)", "category": "Meat & Seafood", "image": null, "status": "need" },
-    { "name": "Chicken Breast", "category": "Meat & Seafood", "image": null, "status": "have" },
-    { "name": "Ground Beef", "category": "Meat & Seafood", "image": null, "status": "have" },
+    { "name": "Beef Stew Meat (cubed)", "category": "Meat & Seafood", "qty": "1 lb", "image": "beef-stew-meat.jpg", "status": "need", "note": "For carne guisada" },
 
-    { "name": "Unsalted Butter", "category": "Dairy & Fridge", "image": null, "status": "have" },
-    { "name": "Heavy Cream (or milk)", "category": "Dairy & Fridge", "image": null, "status": "need" },
-    { "name": "Parmesan Cheese", "category": "Dairy & Fridge", "image": null, "status": "need" },
-    { "name": "Eggs (whole)", "category": "Dairy & Fridge", "image": null, "status": "need" },
+    { "name": "Unsalted Butter", "category": "Dairy & Fridge", "image": "unsalted-butter.jpg", "status": "have" },
+    { "name": "Shredded Cheese (chihuahua or mozzarella)", "category": "Dairy & Fridge", "image": "shredded-cheese.jpg", "status": "need", "note": "For carne guisada" },
 
-    { "name": "Fettuccine Pasta", "category": "Pantry & Grains", "image": null, "status": "have" },
-    { "name": "Rice Noodles", "category": "Pantry & Grains", "image": null, "status": "have" },
-    { "name": "Tomato Sauce", "category": "Pantry & Grains", "image": null, "status": "need" },
-    { "name": "Breadcrumbs", "category": "Pantry & Grains", "image": null, "status": "have" },
+    { "name": "Rice Noodles", "category": "Pantry & Grains", "image": "rice-noodles.jpg", "status": "have" },
+    { "name": "Breadcrumbs", "category": "Pantry & Grains", "image": "breadcrumbs.jpg", "status": "have" },
+    { "name": "Tomato Paste", "category": "Pantry & Grains", "image": "tomato-paste.jpg", "status": "need", "note": "For carne guisada" },
+    { "name": "Beef Stock", "category": "Pantry & Grains", "qty": "1 cup needed", "image": "beef-stock.jpg", "status": "need", "note": "For carne guisada" },
+    { "name": "Tortillas (or rice)", "category": "Pantry & Grains", "image": "tortillas.jpg", "status": "need", "note": "For carne guisada" },
 
-    { "name": "Parsley (dried or fresh)", "category": "Spices & Seasonings", "image": null, "status": "have" },
-    { "name": "Chili Flakes (crushed red pepper)", "category": "Spices & Seasonings", "image": null, "status": "have" },
-    { "name": "Garlic Powder", "category": "Spices & Seasonings", "image": null, "status": "have" },
-    { "name": "Paprika", "category": "Spices & Seasonings", "image": null, "status": "have" },
+    { "name": "Chili Flakes (crushed red pepper)", "category": "Spices & Seasonings", "image": "chili-flakes.jpg", "status": "have" },
+    { "name": "Garlic Powder", "category": "Spices & Seasonings", "image": "garlic-powder.jpg", "status": "have" },
+    { "name": "Paprika", "category": "Spices & Seasonings", "image": "paprika.jpg", "status": "have" },
+    { "name": "Ground Cumin", "category": "Spices & Seasonings", "image": "ground-cumin.jpg", "status": "need", "note": "For carne guisada" },
+    { "name": "Ground Coriander", "category": "Spices & Seasonings", "image": "ground-coriander.jpg", "status": "need", "note": "For carne guisada" },
 
-    { "name": "Egg Whites (liquid carton)", "category": "Baking", "image": null, "status": "have" },
-    { "name": "Pumpkin Purée", "category": "Baking", "image": null, "status": "have" },
-    { "name": "Unsweetened Almond Milk", "category": "Baking", "image": null, "status": "have" },
-    { "name": "All-Purpose Flour", "category": "Baking", "image": null, "status": "have" },
-    { "name": "Oat Flour", "category": "Baking", "image": null, "status": "have" },
-    { "name": "Casein Protein Powder", "category": "Baking", "image": null, "status": "have" },
-    { "name": "Whey/Casein Blend Protein Powder", "category": "Baking", "image": null, "status": "have" },
-    { "name": "Granulated Sugar Substitute", "category": "Baking", "image": null, "status": "have" },
-    { "name": "Black or Dark Cocoa Powder", "category": "Baking", "image": null, "status": "have" },
-    { "name": "Baking Powder", "category": "Baking", "image": null, "status": "have" },
-    { "name": "Chocolate Chips", "category": "Baking", "image": null, "status": "have" }
+    { "name": "Egg Whites (liquid carton)", "category": "Baking", "image": "egg-whites.jpg", "status": "have" },
+    { "name": "Pumpkin Purée", "category": "Baking", "image": "pumpkin-puree.jpg", "status": "have" },
+    { "name": "All-Purpose Flour", "category": "Baking", "image": "all-purpose-flour.jpg", "status": "have" },
+    { "name": "Oat Flour", "category": "Baking", "image": "oat-flour.jpg", "status": "have" },
+    { "name": "Casein Protein Powder", "category": "Baking", "image": "casein-protein.jpg", "status": "have" },
+    { "name": "Whey/Casein Blend Protein Powder", "category": "Baking", "image": "whey-protein.jpg", "status": "have" },
+    { "name": "Granulated Sugar Substitute", "category": "Baking", "image": "sugar-substitute.jpg", "status": "have" },
+    { "name": "Black or Dark Cocoa Powder", "category": "Baking", "image": "cocoa-powder.jpg", "status": "have" },
+    { "name": "Baking Powder", "category": "Baking", "image": "baking-powder.jpg", "status": "have" },
+    { "name": "Chocolate Chips", "category": "Baking", "image": "chocolate-chips.jpg", "status": "have" },
+
+    { "name": "Fresh Parsley", "category": "Produce", "image": "fresh-parsley.jpg", "status": "need", "trip": "Shopping Aug 20" },
+    { "name": "Fresh Basil", "category": "Produce", "image": "fresh-basil.jpg", "status": "need", "trip": "Shopping Aug 20" },
+    { "name": "Parmesan Cheese", "category": "Dairy & Fridge", "image": "parmesan.jpg", "status": "need", "trip": "Shopping Aug 20" },
+    { "name": "Ground Beef", "category": "Meat & Seafood", "qty": "1 lb", "image": "ground-beef.jpg", "status": "need", "trip": "Shopping Aug 20" },
+    { "name": "Celery", "category": "Produce", "qty": "1 stalk", "image": "celery.jpg", "status": "need", "trip": "Shopping Aug 20" },
+    { "name": "Tomato Sauce", "category": "Pantry & Grains", "image": "tomato-sauce.jpg", "status": "need", "trip": "Shopping Aug 20" }
+  ]
+}
+  </script>
+  <script id="recipe-data" type="application/json">
+{
+  "recipes": [
+    {
+      "id": "carne-guisada",
+      "name": "Carne Guisada",
+      "icon": "🍲",
+      "blurb": "Mexican-style braised beef stew. The beef goes in cubed and comes out fork-tender.",
+      "prep": "10 Min",
+      "cook": "30 Min",
+      "total": "40 Min",
+      "yield": "3-4",
+      "source": "recipes/carne-guisada.md",
+      "ingredients": [
+        { "amount": "1 Tbsp", "label": "Oil", "item": "Colavita Extra Virgin Olive Oil" },
+        { "amount": "1 lb", "label": "Cubed beef stew meat", "item": "Beef Stew Meat (cubed)" },
+        { "amount": "1 Tbsp", "label": "Flour", "item": "All-Purpose Flour" },
+        { "amount": "1 Tbsp", "label": "Tomato paste", "item": "Tomato Paste" },
+        { "amount": "1/2", "label": "Onion, diced", "item": "Onion(s)" },
+        { "amount": "1/2", "label": "Green bell pepper, diced", "item": "Bell Peppers" },
+        { "amount": "1 small", "label": "Jalapeño, finely diced", "item": "Jalapeño", "note": "Seeds removed if you want it less spicy" },
+        { "amount": "1", "label": "Tomato, diced", "item": "Tomato (fresh)" },
+        { "amount": "4 cloves", "label": "Garlic, diced", "item": "Garlic" },
+        { "amount": "1/2 tsp", "label": "Chipotle chili powder", "item": "Dunya Chili Powder", "note": "Sub: chili powder + a spoon of Quesada chipotle hot sauce" },
+        { "amount": "1/2 tsp", "label": "Paprika", "item": "Paprika" },
+        { "amount": "1/4 tsp", "label": "Black pepper", "item": "Venetian Gold Ground Black Pepper" },
+        { "amount": "1/2 tsp", "label": "Salt", "item": "Unlabeled jar, white granular (salt or sugar)", "note": "Taste the jar before using — it may be sugar" },
+        { "amount": "1/4 tsp", "label": "Cumin", "item": "Ground Cumin" },
+        { "amount": "1/4 tsp", "label": "Coriander", "item": "Ground Coriander" },
+        { "amount": "1/2 tsp", "label": "Oregano", "item": "Supreme Tradition Oregano Leaves" },
+        { "amount": "1 cup", "label": "Beef stock", "item": "Beef Stock" },
+        { "amount": "1/4 cup", "label": "Fresh cilantro, finely chopped", "item": "Fresh Cilantro" },
+        { "amount": "1/2 cup", "label": "Shredded chihuahua or mozzarella cheese", "item": "Shredded Cheese (chihuahua or mozzarella)" },
+        { "amount": "to serve", "label": "Tortillas, or rice", "item": "Tortillas (or rice)" }
+      ],
+      "steps": [
+        "Heat a large skillet over medium-high heat and add in the oil and cubed beef. Sear the beef for about 2-3 minutes on all sides until they are golden brown. Sprinkle in the flour over all the beef and add the tomato paste. Stir to coat the beef evenly and reduce the heat to medium.",
+        "Add in the diced onion, bell pepper, jalapeño, tomato and garlic and cook, stirring, for about 3-4 minutes until the onions and peppers have softened. Add in the chipotle chili powder, paprika, black pepper, salt, cumin, coriander and oregano and stir to combine.",
+        "Add the beef stock to the beef mixture and bring to a simmer. Reduce the heat to medium-low and cover the pan with a tight fitting lid. Cook for 20-30 minutes until the beef is super tender and easily shredded with a fork, the liquid should be reduced as well.",
+        "Remove the pan from the heat and top with shredded cheese and fresh chopped cilantro. Serve with tortillas for dipping or spoon over rice."
+      ],
+      "notes": [
+        "Don't rush the simmer. If the beef isn't fork-shreddable at 30 minutes, add a splash more stock and keep going — stew meat forgives long cooking, never short cooking.",
+        "Ground beef is not a substitute. It won't shred; the cubed stew meat is what makes the dish."
+      ]
+    }
   ]
 }
   </script>

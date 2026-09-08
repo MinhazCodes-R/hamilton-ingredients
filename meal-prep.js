@@ -7,6 +7,7 @@ const TYPE_ICON = {
   dinner: "🍽️",
   snack: "🥤",
   bedtime: "🌙",
+  extra: "🍱",
 };
 
 const STORAGE_KEY = "hamilton-meal-prep-eaten";

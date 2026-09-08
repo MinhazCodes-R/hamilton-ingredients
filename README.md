@@ -11,6 +11,8 @@ Open `index.html` directly in a browser, or enable **GitHub Pages** for this rep
 - `index.html` / `styles.css` / `app.js` — a searchable, filterable gallery of every ingredient, each scoped to its own photo
 - `images/` — one photo per ingredient (resized/compressed from the original kitchen photos)
 - `data.json` — the same ingredient data in plain JSON, kept in sync with the copy embedded in `index.html`
+- `meal-prep.html` / `meal-prep.js` — a weekly log of meal-prep sessions: what was made, how many containers, and per-container macros
+- `meal-prep-log.json` — the same meal-prep data in plain JSON, kept in sync with the copy embedded in `meal-prep.html`
 - `recipes.json` — recipes, each ingredient cross-referenced to an entry in `data.json`
 - `recipes/` — the same recipes as plain markdown, readable straight from GitHub
 
@@ -55,6 +57,13 @@ from `CREDITS.md`.
 - **In Stock / Shopping List / Running Low** tabs
 - Category chips (Oils & Vinegars, Sauces & Condiments, Spices & Seasonings, Baking, Dairy & Fridge, Produce, Meat & Seafood)
 - Free-text search
+
+## Logging a meal prep
+
+1. Add a new entry to the `entries` array in `meal-prep-log.json` (source of truth) and mirror it into the `<script id="meal-prep-data">` block in `meal-prep.html`.
+2. Fields: `date` (YYYY-MM-DD, drives the week grouping), `meal`, `type` (breakfast/lunch/dinner/snack/bedtime), `servings` (number of containers), `perServing` macros, `ingredients`, and optional `notes`.
+3. Commit and push. Entries are grouped by ISO week automatically — no need to track the week number yourself.
+4. Tap a container checkbox on the page as you eat it — checked state is saved in your browser's `localStorage`, same as the shopping list.
 
 ## Checking things off while you shop
 

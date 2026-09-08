@@ -514,3 +514,153 @@ footer {
   .r-amount { grid-column: 2; font-size: 0.82rem; }
   .r-label { grid-column: 2; }
 }
+
+.page-nav {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.page-nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 6px 0;
+  border-bottom: 2px solid transparent;
+}
+
+.page-nav a:hover {
+  color: var(--text);
+}
+
+.page-nav a.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.week-block {
+  margin-bottom: 32px;
+}
+
+.week-title {
+  font-size: 1.05rem;
+  margin: 0 2px 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.prep-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.prep-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px 18px 18px;
+  transition: opacity 0.15s ease;
+}
+
+.prep-card.all-eaten {
+  opacity: 0.55;
+}
+
+.prep-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.prep-type {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--accent);
+}
+
+.prep-date {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.prep-meal {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+}
+
+.macro-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.macro-row span {
+  background: var(--accent-soft);
+  color: var(--accent);
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.prep-servings {
+  margin-bottom: 10px;
+}
+
+.prep-servings-label {
+  font-size: 0.78rem;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.serving-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.serving-check {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.serving-check input {
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.prep-notes {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-style: italic;
+  margin: 8px 0;
+}
+
+.prep-ingredients {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.prep-ingredients summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.prep-ingredients ul {
+  margin: 8px 0 0;
+  padding-left: 18px;
+}

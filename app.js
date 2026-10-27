@@ -1,5 +1,6 @@
-const raw = document.getElementById("ingredient-data").textContent;
-const data = JSON.parse(raw);
+import { loadData, stars } from "./live-data.js";
+
+const data = await loadData("ingredient-data", "/api/ingredients");
 
 const CATEGORY_ICON = {
   "Oils & Vinegars": "🫒",
@@ -249,9 +250,7 @@ render();
 
 /* ---------- Recipes ---------- */
 
-const recipeData = JSON.parse(
-  document.getElementById("recipe-data").textContent
-);
+const recipeData = await loadData("recipe-data", "/api/recipes");
 
 const statusByName = new Map(
   data.ingredients.map((i) => [i.name, i])
@@ -297,10 +296,12 @@ function recipeHTML(r) {
       <summary>
         <span class="r-icon">${r.icon}</span>
         <span class="r-title">${escapeHTML(r.name)}</span>
+        ${stars(r.rating)}
         ${readiness}
       </summary>
       <div class="recipe-body">
         <p class="r-blurb">${escapeHTML(r.blurb)}</p>
+        ${r.review ? `<p class="r-review">“${escapeHTML(r.review)}”</p>` : ""}
         <dl class="r-times">
           <div><dt>Prep</dt><dd>${escapeHTML(r.prep)}</dd></div>
           <div><dt>Cook</dt><dd>${escapeHTML(r.cook)}</dd></div>

@@ -1,0 +1,11 @@
+name = "hamilton-mcp"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+
+# After `wrangler d1 create hamilton`, paste the database_id it prints.
+[[d1_databases]]
+binding = "DB"
+database_name = "hamilton"
+database_id = "9e612652-2248-4a69-83b2-015a4e7675d2"
+
+# Secret (not stored here):  wrangler secret put MCP_PASSWORD

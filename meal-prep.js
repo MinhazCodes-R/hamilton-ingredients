@@ -1,5 +1,6 @@
-const raw = document.getElementById("meal-prep-data").textContent;
-const data = JSON.parse(raw);
+import { loadData, stars } from "./live-data.js";
+
+const data = await loadData("meal-prep-data", "/api/meal-prep");
 
 const TYPE_ICON = {
   breakfast: "🍳",
@@ -85,13 +86,14 @@ function entryHTML(entry) {
         <span class="prep-type">${TYPE_ICON[entry.type] || "🍽️"} ${entry.type}</span>
         <span class="prep-date">${entry.date}</span>
       </div>
-      <h3 class="prep-meal">${entry.meal}</h3>
+      <h3 class="prep-meal">${entry.meal} ${stars(entry.rating)}</h3>
       ${macroRow(entry.perServing)}
       <div class="prep-servings">
         <span class="prep-servings-label">${eatenNow}/${entry.servings} containers eaten</span>
         <div class="serving-grid">${checkboxes}</div>
       </div>
       ${entry.notes ? `<p class="prep-notes">${entry.notes}</p>` : ""}
+      ${entry.review ? `<p class="prep-notes">“${entry.review}”</p>` : ""}
       <details class="prep-ingredients">
         <summary>Ingredients</summary>
         <ul>${entry.ingredients.map((i) => `<li>${i}</li>`).join("")}</ul>

@@ -664,3 +664,7 @@ footer {
   margin: 8px 0 0;
   padding-left: 18px;
 }
+
+/* Ratings */
+.stars { color: #e0a100; font-size: 0.85em; letter-spacing: 1px; white-space: nowrap; }
+.r-review { font-style: italic; opacity: 0.8; margin: 0 0 0.75rem; }

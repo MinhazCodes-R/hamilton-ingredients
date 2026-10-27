@@ -9,3 +9,7 @@ database_name = "hamilton"
 database_id = "9e612652-2248-4a69-83b2-015a4e7675d2"
 
 # Secret (not stored here):  wrangler secret put MCP_PASSWORD
+
+# Only the production workers.dev URL should serve this (it holds write access behind a password).
+workers_dev = true
+preview_urls = false

@@ -8,3 +8,10 @@ CREATE TABLE IF NOT EXISTS docs (
   updated_at TEXT NOT NULL DEFAULT (datetime('now')),
   UNIQUE (kind, id)
 );
+
+-- Photos taken from the site; base64 JPEG, one per ingredient (replaced on re-upload).
+CREATE TABLE IF NOT EXISTS photos (
+  name       TEXT PRIMARY KEY,
+  data_b64   TEXT NOT NULL,
+  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+);

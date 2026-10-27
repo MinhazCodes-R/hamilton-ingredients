@@ -1,4 +1,6 @@
 import { loadData, stars } from "./live-data.js";
+import { initPhotoCapture, photoSrc } from "./photo.js";
+import { API_BASE } from "./config.js";
 
 const data = await loadData("ingredient-data", "/api/ingredients");
 
@@ -160,8 +162,9 @@ function cardHTML(item) {
     ? `<span class="badge need">Buy</span>`
     : `<span class="badge have">Have</span>`;
 
-  const imgBlock = item.image
-    ? `<img src="images/${item.image}" alt="${item.name}" loading="lazy" />`
+  const src = photoSrc(item);
+  const imgBlock = src
+    ? `<img src="${src}" alt="${item.name}" loading="lazy" />`
     : `<div class="card-img placeholder">${ITEM_ICON[item.name] || CATEGORY_ICON[item.category] || "🍽️"}</div>`;
 
   return `
@@ -169,6 +172,7 @@ function cardHTML(item) {
       <div class="card-img">
         ${imgBlock}
         ${badge}
+        ${API_BASE ? `<button type="button" class="photo-btn" data-name="${item.name.replace(/"/g, "&quot;")}" title="Take a new photo" aria-label="Take a new photo of ${item.name.replace(/"/g, "&quot;")}">📷</button>` : ""}
       </div>
       <div class="card-body">
         <label class="card-check">
@@ -247,6 +251,7 @@ search.addEventListener("input", (e) => {
 buildCategoryChips();
 buildStatusTabs();
 render();
+initPhotoCapture(sections, (name) => data.ingredients.find((i) => i.name === name), render);
 
 /* ---------- Recipes ---------- */
 

@@ -156,6 +156,7 @@ export const tools: Tool[] = [
     description: "Permanently delete an ingredient by exact name. Recipes that reference it will show it as untracked.",
     inputSchema: obj({ name: str("Exact ingredient name") }, ["name"]),
     async run(env, a) {
+      await env.DB.prepare("DELETE FROM photos WHERE name = ?").bind(a.name).run();
       return { deleted: await deleteDoc(env, "ingredient", a.name) };
     },
   },

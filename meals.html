@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daily Meals</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <h1>🗓️ Daily Meals</h1>
+      <p class="subtitle">What I ate, day by day</p>
+      <nav class="page-nav">
+        <a href="index.html">🍳 Ingredients</a>
+        <a href="meal-prep.html">🥡 Meal Prep Log</a>
+        <a href="meals.html" class="active">🗓️ Daily Meals</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="cal-controls">
+      <button type="button" id="cal-prev" aria-label="Previous week">‹</button>
+      <button type="button" id="cal-today">Today</button>
+      <button type="button" id="cal-next" aria-label="Next week">›</button>
+      <h2 id="cal-range"></h2>
+    </div>
+    <p class="count" id="cal-summary"></p>
+
+    <div id="cal-week" class="cal-week"></div>
+    <p class="empty" id="cal-error" hidden></p>
+  </main>
+
+  <footer>
+    <p>Meals are logged by telling a connected chatbot what you ate. Days with no numbers entered don't count toward totals.</p>
+  </footer>
+  <script type="module" src="meals.js"></script>
+</body>
+</html>

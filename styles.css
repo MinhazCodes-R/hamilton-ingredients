@@ -668,3 +668,32 @@ footer {
 /* Ratings */
 .stars { color: #e0a100; font-size: 0.85em; letter-spacing: 1px; white-space: nowrap; }
 .r-review { font-style: italic; opacity: 0.8; margin: 0 0 0.75rem; }
+
+/* Daily Meals calendar */
+.cal-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 4px 0 6px; }
+.cal-controls h2 { margin: 0 0 0 8px; font-size: 1.1rem; }
+.cal-controls button {
+  border: 1px solid var(--border); background: var(--surface); color: var(--text);
+  border-radius: 10px; padding: 6px 14px; font: inherit; cursor: pointer;
+}
+.cal-week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; margin-top: 10px; }
+.cal-day {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow); display: flex; flex-direction: column; min-height: 140px; overflow: hidden;
+}
+.cal-day.today { border-color: var(--accent); }
+.cal-day.future { opacity: 0.85; }
+.cal-day-head { display: flex; align-items: baseline; gap: 6px; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+.cal-dow { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.cal-dom { font-weight: 700; font-size: 1.1rem; }
+.cal-day.today .cal-dom { color: var(--accent); }
+.cal-day-body { padding: 8px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.cal-none { color: var(--muted); font-size: 0.8rem; margin: 4px 2px; }
+.cal-entry { background: var(--accent-soft); border-radius: 10px; padding: 6px 8px; font-size: 0.82rem; }
+.cal-entry.slot-lunch { background: var(--green-soft); }
+.cal-entry.slot-snack, .cal-entry.slot-bedtime { background: var(--amber-soft); }
+.cal-entry-head { display: flex; justify-content: space-between; gap: 6px; color: var(--muted); font-size: 0.72rem; text-transform: capitalize; }
+.cal-entry-meal { font-weight: 600; margin-top: 2px; overflow-wrap: anywhere; }
+.cal-entry-macros, .cal-entry-notes { color: var(--muted); font-size: 0.74rem; margin-top: 2px; }
+.cal-day-totals { padding: 6px 10px; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--muted); font-weight: 600; }
+@media (max-width: 900px) { .cal-week { grid-template-columns: 1fr; } .cal-day { min-height: 0; } }

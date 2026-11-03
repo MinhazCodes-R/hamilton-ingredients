@@ -34,6 +34,8 @@ const checkRating = (r: unknown) => {
 
 const INGREDIENT_FIELDS = ["name", "category", "qty", "status", "low", "trip", "note", "image", "rating", "review"];
 const MEAL_TYPES = ["breakfast", "lunch", "dinner", "snack", "bedtime", "extra"];
+const SLOTS = ["breakfast", "lunch", "dinner", "snack", "bedtime"];
+const todayToronto = () => new Date().toLocaleDateString("en-CA", { timeZone: "America/Toronto" });
 
 function onlyKnown(args: Doc, allowed: string[]) {
   const bad = Object.keys(args).filter((k) => !allowed.includes(k));
@@ -291,6 +293,77 @@ export const tools: Tool[] = [
     inputSchema: obj({ id: str("Entry id") }, ["id"]),
     async run(env, a) {
       return { deleted: await deleteDoc(env, "meal", a.id) };
+    },
+  },
+
+  // ---------- daily meal log (what I actually ate, like a food calendar) ----------
+  {
+    name: "log_meal",
+    description:
+      "Log something eaten (or planned) on a specific day in the daily meal calendar. Omit id to add a new entry; pass id to edit one. " +
+      "date defaults to today (Toronto time) and must be YYYY-MM-DD otherwise. New entries need meal and slot. " +
+      "This is separate from the weekly meal-prep log: use log_meal for each thing actually eaten, e.g. 'chicken bowl, lunch'. " +
+      "Set mealPrepId to link a container from a meal-prep entry, or recipeId for a saved recipe.",
+    inputSchema: obj({
+      id: str("Existing entry id (omit to create)"),
+      date: str("YYYY-MM-DD, defaults to today"),
+      slot: { enum: SLOTS },
+      time: { type: ["string", "null"], description: "Optional 24h HH:MM, e.g. '13:30'" },
+      meal: str("What was eaten"),
+      calories: { type: ["number", "null"] },
+      protein: { type: ["number", "null"], description: "grams" },
+      carbs: { type: ["number", "null"], description: "grams" },
+      fat: { type: ["number", "null"], description: "grams" },
+      notes: { type: ["string", "null"] },
+      mealPrepId: { type: ["string", "null"], description: "Meal-prep entry id this came from" },
+      recipeId: { type: ["string", "null"], description: "Recipe id this came from" },
+      rating: ratingProp,
+      review: { type: ["string", "null"] },
+    }),
+    async run(env, a) {
+      onlyKnown(a, ["id", "date", "slot", "time", "meal", "calories", "protein", "carbs", "fat", "notes", "mealPrepId", "recipeId", "rating", "review"]);
+      checkRating(a.rating);
+      if (a.date && !/^\d{4}-\d{2}-\d{2}$/.test(a.date)) fail("date must be YYYY-MM-DD.");
+      if (a.time && !/^([01]\d|2[0-3]):[0-5]\d$/.test(a.time)) fail("time must be 24h HH:MM.");
+      if (a.slot && !SLOTS.includes(a.slot)) fail(`slot must be one of ${SLOTS.join(", ")}`);
+      const existing = a.id ? await getDoc(env, "log", a.id) : null;
+      if (a.id && !existing) fail(`No log entry with id '${a.id}'. Omit id to create a new one.`);
+      const next = merge(existing ?? { date: todayToronto() }, a);
+      if (!existing) {
+        if (!next.meal || !next.slot) fail("New entries need meal and slot.");
+        next.id = `${next.date}-${next.slot}-${slug(next.meal).slice(0, 30)}-${crypto.randomUUID().slice(0, 4)}`;
+      }
+      await putDoc(env, "log", next.id, next);
+      return { created: !existing, entry: next };
+    },
+  },
+  {
+    name: "list_meal_log",
+    description:
+      "Read the daily meal log for a date range (default: last 7 days up to today, Toronto time), with per-day calorie/protein/carb/fat totals. " +
+      "Totals only add up entries that have those numbers filled in.",
+    inputSchema: obj({ from: str("Start date YYYY-MM-DD"), to: str("End date YYYY-MM-DD") }),
+    readOnly: true,
+    async run(env, a) {
+      const to = a.to ?? todayToronto();
+      const from = a.from ?? new Date(new Date(to + "T00:00:00Z").getTime() - 6 * 86400000).toISOString().slice(0, 10);
+      const entries = (await listDocs(env, "log"))
+        .filter((e) => e.date >= from && e.date <= to)
+        .sort((x, y) => (x.date + (x.time ?? "")).localeCompare(y.date + (y.time ?? "")));
+      const totals: Record<string, Record<string, number>> = {};
+      for (const e of entries) {
+        const t = (totals[e.date] ??= { calories: 0, protein: 0, carbs: 0, fat: 0 });
+        for (const k of ["calories", "protein", "carbs", "fat"]) t[k] += Number(e[k]) || 0;
+      }
+      return { from, to, entries, dailyTotals: totals };
+    },
+  },
+  {
+    name: "delete_meal_log",
+    description: "Permanently delete a daily meal-log entry by id.",
+    inputSchema: obj({ id: str("Log entry id") }, ["id"]),
+    async run(env, a) {
+      return { deleted: await deleteDoc(env, "log", a.id) };
     },
   },
 

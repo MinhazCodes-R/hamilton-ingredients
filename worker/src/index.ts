@@ -1,5 +1,5 @@
 import { handleOAuth, isAuthorized, metadata } from "./auth";
-import { type Env, ingredientsFile, mealPrepFile, recipesFile } from "./db";
+import { type Env, ingredientsFile, mealLogFile, mealPrepFile, recipesFile } from "./db";
 import { handleMcp } from "./mcp";
 
 const CORS = {
@@ -17,6 +17,8 @@ async function route(req: Request, env: Env): Promise<Response> {
     if (url.pathname === "/api/ingredients") return Response.json(await ingredientsFile(env), { headers: { "cache-control": "no-cache" } });
     if (url.pathname === "/api/recipes") return Response.json(await recipesFile(env), { headers: { "cache-control": "no-cache" } });
     if (url.pathname === "/api/meal-prep") return Response.json(await mealPrepFile(env), { headers: { "cache-control": "no-cache" } });
+    if (url.pathname === "/api/meal-log")
+      return Response.json(await mealLogFile(env, url.searchParams.get("from"), url.searchParams.get("to")), { headers: { "cache-control": "no-cache" } });
     if (url.pathname === "/") return new Response("Hamilton Kitchen MCP server. Connect a client to /mcp.");
   }
 

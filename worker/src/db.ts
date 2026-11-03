@@ -3,7 +3,7 @@ export interface Env {
   MCP_PASSWORD: string;
 }
 
-export type Kind = "ingredient" | "recipe" | "meal";
+export type Kind = "ingredient" | "recipe" | "meal" | "log";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Doc = Record<string, any>;
 
@@ -57,4 +57,12 @@ export async function recipesFile(env: Env) {
 }
 export async function mealPrepFile(env: Env) {
   return { updated: await lastUpdated(env, ["meal"]), entries: await listDocs(env, "meal") };
+}
+
+// Day-by-day eating log (what was actually eaten, or planned), filtered by inclusive date range.
+export async function mealLogFile(env: Env, from?: string | null, to?: string | null) {
+  const entries = (await listDocs(env, "log"))
+    .filter((e) => (!from || e.date >= from) && (!to || e.date <= to))
+    .sort((a, b) => (a.date + (a.time ?? "")).localeCompare(b.date + (b.time ?? "")));
+  return { entries };
 }

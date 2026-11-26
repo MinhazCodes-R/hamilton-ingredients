@@ -9,12 +9,15 @@
 <body>
   <header class="topbar">
     <div class="topbar-inner">
-      <h1>🥡 Meal Prep Log</h1>
-      <p class="subtitle">What got prepped, per week — updated <span id="updated-date"></span></p>
-      <nav class="page-nav">
-        <a href="index.html">🍳 Ingredients</a>
-        <a href="meal-prep.html" class="active">🥡 Meal Prep Log</a>
-              <a href="meals.html">🗓️ Daily Meals</a>
+      <div class="brand">
+        <p class="eyebrow">Hamilton kitchen</p>
+        <h1>Meal prep log</h1>
+        <p class="subtitle">What got prepped, per week — updated <span id="updated-date"></span></p>
+      </div>
+      <nav class="page-nav" aria-label="Pages">
+        <a href="index.html">Ingredients</a>
+        <a href="meal-prep.html" class="active" aria-current="page">Meal prep log</a>
+        <a href="meals.html">Daily meals</a>
       </nav>
     </div>
   </header>
@@ -31,6 +34,13 @@
   <footer>
     <p>Container checkboxes are saved in this browser only (localStorage), not synced across devices.</p>
   </footer>
+
+  <nav class="bottom-nav" aria-label="Sections">
+    <a href="index.html#recipes">Recipes</a>
+    <a href="index.html#shopping">Shopping</a>
+    <a href="meal-prep.html" class="active" aria-current="page">Meal prep</a>
+    <a href="meals.html">Meals</a>
+  </nav>
 
   <script id="meal-prep-data" type="application/json">
 {

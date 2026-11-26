@@ -1,5 +1,47 @@
 import { loadData, stars } from "./live-data.js";
 
+/* ---------- Views ----------
+   On wide screens every panel shows at once. On phones (see styles.css) only the
+   panel named by `main[data-view]` shows; the URL hash picks it, so the top tabs
+   and the bottom bar on every page can link straight to a view. */
+
+const VIEWS = {
+  recipes: { title: "Recipes", nav: "recipes" },
+  shopping: { title: "Shopping list", nav: "shopping" },
+  "in-stock": { title: "In stock", nav: "shopping" },
+};
+const DEFAULT_VIEW = "shopping";
+
+const main = document.getElementById("main");
+const viewTitle = document.getElementById("view-title");
+
+function currentView() {
+  const view = location.hash.slice(1);
+  return VIEWS[view] ? view : DEFAULT_VIEW;
+}
+
+function markCurrent(link, on) {
+  link.classList.toggle("active", on);
+  if (on) link.setAttribute("aria-current", "page");
+  else link.removeAttribute("aria-current");
+}
+
+function applyView() {
+  const view = currentView();
+  main.dataset.view = view;
+  viewTitle.textContent = VIEWS[view].title;
+  document.querySelectorAll("[data-view-link]").forEach((a) => markCurrent(a, a.dataset.viewLink === view));
+  document.querySelectorAll(".bottom-nav [data-nav]").forEach((a) => markCurrent(a, a.dataset.nav === VIEWS[view].nav));
+}
+
+window.addEventListener("hashchange", () => {
+  applyView();
+  window.scrollTo(0, 0);
+});
+applyView();
+
+/* ---------- Ingredients ---------- */
+
 const data = await loadData("ingredient-data", "/api/ingredients");
 
 const CATEGORY_ICON = {
@@ -13,7 +55,7 @@ const CATEGORY_ICON = {
   "Pantry & Grains": "🍝",
 };
 
-// Falls back to CATEGORY_ICON for anything not listed here.
+// Placeholder art for in-stock cards without a photo. Falls back to CATEGORY_ICON.
 const ITEM_ICON = {
   "Garlic": "🧄",
   "Onion(s)": "🧅",
@@ -52,14 +94,22 @@ const ITEM_ICON = {
 
 const STORAGE_KEY = "hamilton-ingredients-checked";
 
-// Items whose `trip` matches this are pulled into their own section.
+// Items whose `trip` matches this are pulled into their own group at the top.
 const CURRENT_TRIP = "Shopping Aug 20";
+
+function escapeHTML(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  }[c]));
+}
 
 // Give every ingredient a stable id so checked state survives re-renders
 // and page reloads, even if the list order changes slightly.
 data.ingredients.forEach((item, i) => {
   item.id = `${i}-${item.name.replace(/\s+/g, "-").toLowerCase()}`;
 });
+
+const categories = [...new Set([...(data.categories || []), ...data.ingredients.map((i) => i.category)])];
 
 function loadChecked() {
   try {
@@ -70,102 +120,117 @@ function loadChecked() {
 }
 
 function saveChecked() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify([...checked]));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([...checked]));
+  } catch {
+    // Private mode or storage blocked: checks still work until reload.
+  }
 }
 
 const checked = loadChecked();
 
 const state = {
-  status: "all",
   category: "all",
+  lowOnly: false,
   query: "",
 };
 
-const sections = document.getElementById("sections");
-const gridNeed = document.getElementById("grid-need");
-const gridHave = document.getElementById("grid-have");
-const sectionNeed = document.getElementById("section-need");
-const gridTrip = document.getElementById("grid-trip");
-const sectionTrip = document.getElementById("section-trip");
-const tripTitle = document.getElementById("trip-title");
-const tripCount = document.getElementById("trip-count");
-const sectionHave = document.getElementById("section-have");
+const needGroups = document.getElementById("need-groups");
 const needCount = document.getElementById("need-count");
-const haveCount = document.getElementById("have-count");
-const emptyMsg = document.getElementById("empty-msg");
-const resultCount = document.getElementById("result-count");
-const totalCount = document.getElementById("total-count");
-const updatedDate = document.getElementById("updated-date");
-const categoryChips = document.getElementById("category-chips");
-const statusTabs = document.getElementById("status-tabs");
-const search = document.getElementById("search");
+const needTabCount = document.getElementById("need-tab-count");
+const needEmpty = document.getElementById("need-empty");
+const checkedSummary = document.getElementById("checked-summary");
 const clearCheckedBtn = document.getElementById("clear-checked");
+const gridHave = document.getElementById("grid-have");
+const haveCount = document.getElementById("have-count");
+const haveEmpty = document.getElementById("have-empty");
+const categoryChips = document.getElementById("category-chips");
+const search = document.getElementById("search");
 
-updatedDate.textContent = data.updated;
-totalCount.textContent = data.ingredients.length;
+if (data.updated) {
+  document.getElementById("updated-date").textContent = data.updated;
+  document.getElementById("updated-wrap").hidden = false;
+}
+document.getElementById("total-count").textContent = data.ingredients.length;
 
 function buildCategoryChips() {
-  const allChip = document.createElement("button");
-  allChip.className = "chip active";
-  allChip.dataset.category = "all";
-  allChip.textContent = "All categories";
-  categoryChips.appendChild(allChip);
-
-  data.categories.forEach((cat) => {
-    const chip = document.createElement("button");
-    chip.className = "chip";
-    chip.dataset.category = cat;
-    chip.textContent = `${CATEGORY_ICON[cat] || ""} ${cat}`;
-    categoryChips.appendChild(chip);
-  });
+  const chips = [{ category: "all", label: "All categories" }, ...categories.map((c) => ({ category: c, label: c }))];
+  categoryChips.innerHTML =
+    chips
+      .map((c) => `<button type="button" class="chip${c.category === "all" ? " active" : ""}" data-category="${escapeHTML(c.category)}" aria-pressed="${c.category === "all"}">${escapeHTML(c.label)}</button>`)
+      .join("") +
+    `<button type="button" class="chip chip-toggle" id="low-toggle" aria-pressed="false">Running low</button>`;
 
   categoryChips.addEventListener("click", (e) => {
     const btn = e.target.closest(".chip");
     if (!btn) return;
-    state.category = btn.dataset.category;
-    [...categoryChips.children].forEach((c) => c.classList.toggle("active", c === btn));
-    render();
-  });
-}
-
-function buildStatusTabs() {
-  statusTabs.addEventListener("click", (e) => {
-    const btn = e.target.closest(".tab");
-    if (!btn) return;
-    state.status = btn.dataset.status;
-    [...statusTabs.children].forEach((c) => c.classList.toggle("active", c === btn));
-    render();
-  });
-}
-
-function matchesFilters(item) {
-  if (state.status === "have" && item.status !== "have") return false;
-  if (state.status === "need" && item.status !== "need") return false;
-  if (state.status === "low" && !item.low) return false;
-  if (state.category !== "all" && item.category !== state.category) return false;
-  if (state.query) {
-    const q = state.query.toLowerCase();
-    if (!item.name.toLowerCase().includes(q) && !item.category.toLowerCase().includes(q)) {
-      return false;
+    if (btn.id === "low-toggle") {
+      state.lowOnly = !state.lowOnly;
+      btn.classList.toggle("active", state.lowOnly);
+      btn.setAttribute("aria-pressed", String(state.lowOnly));
+    } else {
+      state.category = btn.dataset.category;
+      categoryChips.querySelectorAll("[data-category]").forEach((c) => {
+        c.classList.toggle("active", c === btn);
+        c.setAttribute("aria-pressed", String(c === btn));
+      });
     }
-  }
+    render();
+  });
+}
+
+function matchesQuery(item) {
+  if (!state.query) return true;
+  const q = state.query.toLowerCase();
+  return item.name.toLowerCase().includes(q) || item.category.toLowerCase().includes(q);
+}
+
+function matchesHaveFilters(item) {
+  if (state.category !== "all" && item.category !== state.category) return false;
+  if (state.lowOnly && !item.low) return false;
   return true;
+}
+
+// Shopping-list rows: plain list entries, no photo or badge. The whole row is the
+// checkbox's label so it is easy to tap in a store.
+function shopRowHTML(item, showCategory) {
+  const isChecked = checked.has(item.id);
+  const meta = [item.qty, showCategory ? item.category : null].filter(Boolean).join(" · ");
+  return `
+    <li class="shop-row${isChecked ? " checked" : ""}">
+      <label>
+        <input type="checkbox" data-id="${item.id}" ${isChecked ? "checked" : ""} />
+        <span class="shop-text">
+          <span class="shop-name">${escapeHTML(item.name)}</span>
+          ${item.note ? `<span class="shop-note">${escapeHTML(item.note)}</span>` : ""}
+        </span>
+        ${meta ? `<span class="shop-meta">${escapeHTML(meta)}</span>` : ""}
+      </label>
+    </li>`;
+}
+
+function groupNeedItems(items) {
+  const groups = [];
+  const trip = items.filter((i) => i.trip === CURRENT_TRIP);
+  if (trip.length) groups.push({ title: CURRENT_TRIP, items: trip, mixed: true });
+  const rest = items.filter((i) => i.trip !== CURRENT_TRIP);
+  categories.forEach((cat) => {
+    const inCat = rest.filter((i) => i.category === cat);
+    if (inCat.length) groups.push({ title: cat, items: inCat, mixed: false });
+  });
+  return groups;
 }
 
 function cardHTML(item) {
   const isChecked = checked.has(item.id);
-  const badge = item.low
-    ? `<span class="badge low">Low</span>`
-    : item.status === "need"
-    ? `<span class="badge need">Buy</span>`
-    : `<span class="badge have">Have</span>`;
+  const badge = item.low ? `<span class="badge low">Low</span>` : "";
 
   const imgBlock = item.image
-    ? `<img src="images/${item.image}" alt="${item.name}" loading="lazy" />`
-    : `<div class="card-img placeholder">${ITEM_ICON[item.name] || CATEGORY_ICON[item.category] || "🍽️"}</div>`;
+    ? `<img src="images/${escapeHTML(item.image)}" alt="${escapeHTML(item.name)}" loading="lazy" />`
+    : `<div class="card-img placeholder" aria-hidden="true">${ITEM_ICON[item.name] || CATEGORY_ICON[item.category] || "🍽️"}</div>`;
 
   return `
-    <div class="card ${isChecked ? "checked" : ""}" data-id="${item.id}">
+    <div class="card ${isChecked ? "checked" : ""}">
       <div class="card-img">
         ${imgBlock}
         ${badge}
@@ -173,12 +238,12 @@ function cardHTML(item) {
       <div class="card-body">
         <label class="card-check">
           <input type="checkbox" data-id="${item.id}" ${isChecked ? "checked" : ""} />
-          <span class="card-name">${item.name}</span>
+          <span class="card-name">${escapeHTML(item.name)}</span>
         </label>
-        ${item.note ? `<div class="card-note">${item.note}</div>` : ""}
+        ${item.note ? `<div class="card-note">${escapeHTML(item.note)}</div>` : ""}
         <div class="card-meta">
-          <span class="card-category">${CATEGORY_ICON[item.category] || ""} ${item.category}</span>
-          ${item.qty ? `<span class="card-qty">${item.qty}</span>` : ""}
+          <span class="card-category">${escapeHTML(item.category)}</span>
+          ${item.qty ? `<span class="card-qty">${escapeHTML(item.qty)}</span>` : ""}
         </div>
       </div>
     </div>
@@ -186,50 +251,39 @@ function cardHTML(item) {
 }
 
 function render() {
-  const filtered = data.ingredients.filter(matchesFilters);
-  // Items tagged for a specific shopping trip get their own section above
-  // the general shopping list, so one run's items stay together.
-  const tripItems = filtered.filter((i) => i.status === "need" && i.trip === CURRENT_TRIP);
-  const needItems = filtered.filter((i) => i.status === "need" && i.trip !== CURRENT_TRIP);
-  const haveItems = filtered.filter((i) => i.status === "have");
+  const need = data.ingredients.filter((i) => i.status === "need");
+  const have = data.ingredients.filter((i) => i.status === "have");
+  const needShown = need.filter(matchesQuery);
+  const haveShown = have.filter((i) => matchesQuery(i) && matchesHaveFilters(i));
 
-  gridTrip.innerHTML = tripItems.map(cardHTML).join("");
-  gridNeed.innerHTML = needItems.map(cardHTML).join("");
+  needGroups.innerHTML = groupNeedItems(needShown)
+    .map((g) => `
+      <h3 class="shop-group-title">${escapeHTML(g.title)}</h3>
+      <ul class="shop-list">${g.items.map((i) => shopRowHTML(i, g.mixed)).join("")}</ul>`)
+    .join("");
 
-  sectionTrip.hidden = tripItems.length === 0;
-  tripTitle.textContent = `🛒 ${CURRENT_TRIP}`;
-  tripCount.textContent = tripItems.length ? `(${tripItems.length})` : "";
-  gridHave.innerHTML = haveItems.map(cardHTML).join("");
+  needCount.textContent = need.length;
+  needTabCount.textContent = need.length || "";
+  const checkedNeed = need.filter((i) => checked.has(i.id)).length;
+  checkedSummary.textContent = need.length ? `${checkedNeed} of ${need.length} checked off` : "";
+  clearCheckedBtn.hidden = !data.ingredients.some((i) => checked.has(i.id));
+  needEmpty.hidden = needShown.length !== 0;
+  needEmpty.textContent = need.length ? "Nothing on the list matches your search." : "Nothing to buy right now.";
 
-  sectionNeed.hidden = needItems.length === 0;
-  sectionHave.hidden = haveItems.length === 0;
-  needCount.textContent = needItems.length ? `(${needItems.length})` : "";
-  haveCount.textContent = haveItems.length ? `(${haveItems.length})` : "";
-
-  emptyMsg.hidden = filtered.length !== 0;
-
-  const checkedInView = filtered.filter((i) => checked.has(i.id)).length;
-  resultCount.textContent =
-    state.status === "need" && filtered.length
-      ? `${checkedInView} of ${filtered.length} checked off`
-      : `${filtered.length} of ${data.ingredients.length} ingredients`;
-
-  const anyCheckedAtAll = data.ingredients.some((i) => checked.has(i.id));
-  clearCheckedBtn.hidden = !anyCheckedAtAll;
+  gridHave.innerHTML = haveShown.map(cardHTML).join("");
+  haveCount.textContent = have.length;
+  haveEmpty.hidden = haveShown.length !== 0;
 }
 
-sections.addEventListener("change", (e) => {
+main.addEventListener("change", (e) => {
   const box = e.target.closest("input[type=checkbox][data-id]");
   if (!box) return;
-  const id = box.dataset.id;
   if (box.checked) {
-    checked.add(id);
+    checked.add(box.dataset.id);
   } else {
-    checked.delete(id);
+    checked.delete(box.dataset.id);
   }
   saveChecked();
-  const card = sections.querySelector(`.card[data-id="${id}"]`);
-  if (card) card.classList.toggle("checked", box.checked);
   render();
 });
 
@@ -245,7 +299,6 @@ search.addEventListener("input", (e) => {
 });
 
 buildCategoryChips();
-buildStatusTabs();
 render();
 
 /* ---------- Recipes ---------- */
@@ -255,12 +308,6 @@ const recipeData = await loadData("recipe-data", "/api/recipes");
 const statusByName = new Map(
   data.ingredients.map((i) => [i.name, i])
 );
-
-function escapeHTML(s) {
-  return String(s).replace(/[&<>"']/g, (c) => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
-  }[c]));
-}
 
 function recipeIngredientHTML(ing) {
   const inv = ing.item ? statusByName.get(ing.item) : null;
@@ -294,7 +341,6 @@ function recipeHTML(r) {
   return `
     <details class="recipe" ${missing === 0 ? "open" : ""}>
       <summary>
-        <span class="r-icon">${r.icon}</span>
         <span class="r-title">${escapeHTML(r.name)}</span>
         ${stars(r.rating)}
         ${readiness}
@@ -326,11 +372,12 @@ function recipeHTML(r) {
 }
 
 function renderRecipes() {
-  const host = document.getElementById("recipes");
-  if (!host || !recipeData.recipes.length) return;
-  host.innerHTML =
-    `<h2 class="section-title recipes">🍲 Recipes</h2>` +
-    recipeData.recipes.map(recipeHTML).join("");
+  const host = document.getElementById("recipes-list");
+  const recipes = recipeData.recipes || [];
+  document.getElementById("recipe-count").textContent = recipes.length || "";
+  host.innerHTML = recipes.length
+    ? recipes.map(recipeHTML).join("")
+    : `<p class="empty">No recipes yet.</p>`;
 }
 
 renderRecipes();

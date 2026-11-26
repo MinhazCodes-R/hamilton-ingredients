@@ -9,12 +9,15 @@
 <body>
   <header class="topbar">
     <div class="topbar-inner">
-      <h1>🗓️ Daily Meals</h1>
-      <p class="subtitle">What I ate, day by day</p>
-      <nav class="page-nav">
-        <a href="index.html">🍳 Ingredients</a>
-        <a href="meal-prep.html">🥡 Meal Prep Log</a>
-        <a href="meals.html" class="active">🗓️ Daily Meals</a>
+      <div class="brand">
+        <p class="eyebrow">Hamilton kitchen</p>
+        <h1>Daily meals</h1>
+        <p class="subtitle">What I ate, day by day</p>
+      </div>
+      <nav class="page-nav" aria-label="Pages">
+        <a href="index.html">Ingredients</a>
+        <a href="meal-prep.html">Meal prep log</a>
+        <a href="meals.html" class="active" aria-current="page">Daily meals</a>
       </nav>
     </div>
   </header>
@@ -35,6 +38,13 @@
   <footer>
     <p>Meals are logged by telling a connected chatbot what you ate. Days with no numbers entered don't count toward totals.</p>
   </footer>
+
+  <nav class="bottom-nav" aria-label="Sections">
+    <a href="index.html#recipes">Recipes</a>
+    <a href="index.html#shopping">Shopping</a>
+    <a href="meal-prep.html">Meal prep</a>
+    <a href="meals.html" class="active" aria-current="page">Meals</a>
+  </nav>
   <script type="module" src="meals.js"></script>
 </body>
 </html>

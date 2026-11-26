@@ -9,55 +9,67 @@
 <body>
   <header class="topbar">
     <div class="topbar-inner">
-      <h1>🍳 Hamilton Kitchen Ingredients</h1>
-      <p class="subtitle">What's in stock, what's on the shopping list — updated <span id="updated-date"></span></p>
-      <nav class="page-nav">
-        <a href="index.html" class="active">🍳 Ingredients</a>
-        <a href="meal-prep.html">🥡 Meal Prep Log</a>
-              <a href="meals.html">🗓️ Daily Meals</a>
+      <div class="brand">
+        <p class="eyebrow">Hamilton kitchen</p>
+        <h1><span class="title-wide">Ingredients</span><span class="title-narrow" id="view-title">Shopping list</span></h1>
+        <p class="subtitle">What's in stock and what's on the shopping list<span id="updated-wrap" hidden> · updated <span id="updated-date"></span></span></p>
+      </div>
+      <nav class="page-nav" aria-label="Pages">
+        <a href="index.html" class="active" aria-current="page">Ingredients</a>
+        <a href="meal-prep.html">Meal prep log</a>
+        <a href="meals.html">Daily meals</a>
+      </nav>
+      <nav class="view-tabs" aria-label="Views">
+        <a href="#recipes" data-view-link="recipes">Recipes</a>
+        <a href="#shopping" data-view-link="shopping">Need to buy <span class="tab-count" id="need-tab-count"></span></a>
+        <a href="#in-stock" data-view-link="in-stock">In stock</a>
       </nav>
     </div>
   </header>
 
-  <main>
-    <section id="recipes"></section>
+  <!-- Wide screens show every panel; phones show the one picked in .view-tabs (see app.js). -->
+  <main id="main" data-view="shopping">
+    <div class="board">
+      <section class="panel panel-recipes" aria-labelledby="recipes-heading">
+        <h2 class="section-title" id="recipes-heading">Recipes <span class="section-count" id="recipe-count"></span></h2>
+        <div id="recipes-list"></div>
+      </section>
 
-    <div class="controls">
-      <input id="search" type="search" placeholder="Search ingredients…" autocomplete="off" />
-      <div class="tabs" id="status-tabs">
-        <button class="tab active" data-status="all">All</button>
-        <button class="tab" data-status="have">In Stock</button>
-        <button class="tab" data-status="need">Shopping List</button>
-        <button class="tab" data-status="low">Running Low</button>
+      <div class="shop-col">
+        <h2 class="section-title" id="need-heading">Need to buy <span class="section-count" id="need-count"></span></h2>
+        <div class="toolbar">
+          <label class="visually-hidden" for="search">Search ingredients</label>
+          <input id="search" type="search" placeholder="Search ingredients" autocomplete="off" />
+        </div>
+        <section class="panel panel-need" aria-labelledby="need-heading">
+          <div class="checked-row">
+            <p class="count" id="checked-summary"></p>
+            <button id="clear-checked" class="link-btn" type="button" hidden>Clear checked-off items</button>
+          </div>
+          <div id="need-groups"></div>
+          <p class="empty" id="need-empty" hidden></p>
+        </section>
       </div>
+    </div>
+
+    <section class="panel panel-have" aria-labelledby="have-heading">
+      <h2 class="section-title" id="have-heading">In stock <span class="section-count" id="have-count"></span></h2>
       <div class="chip-row" id="category-chips"></div>
-    </div>
-
-    <div class="count-row">
-      <p class="count" id="result-count"></p>
-      <button id="clear-checked" class="link-btn" hidden>Clear checked-off items</button>
-    </div>
-
-    <div id="sections">
-      <section class="status-section" id="section-trip" hidden>
-        <h2 class="section-title trip"><span id="trip-title"></span> <span class="section-count" id="trip-count"></span></h2>
-        <div class="grid" id="grid-trip"></div>
-      </section>
-      <section class="status-section" id="section-need">
-        <h2 class="section-title need">🛒 Need to Buy <span class="section-count" id="need-count"></span></h2>
-        <div class="grid" id="grid-need"></div>
-      </section>
-      <section class="status-section" id="section-have">
-        <h2 class="section-title have">✅ Have in Kitchen <span class="section-count" id="have-count"></span></h2>
-        <div class="grid" id="grid-have"></div>
-      </section>
-    </div>
-    <p class="empty" id="empty-msg" hidden>No ingredients match your filters.</p>
+      <div class="grid" id="grid-have"></div>
+      <p class="empty" id="have-empty" hidden>No ingredients match your filters.</p>
+    </section>
   </main>
 
   <footer>
     <p>Generated from kitchen photos · <span id="total-count"></span> ingredients tracked</p>
   </footer>
+
+  <nav class="bottom-nav" aria-label="Sections">
+    <a href="index.html#recipes" data-nav="recipes">Recipes</a>
+    <a href="index.html#shopping" data-nav="shopping">Shopping</a>
+    <a href="meal-prep.html">Meal prep</a>
+    <a href="meals.html">Meals</a>
+  </nav>
 
   <script id="ingredient-data" type="application/json">
 {

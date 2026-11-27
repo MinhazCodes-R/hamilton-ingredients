@@ -95,7 +95,7 @@ const ITEM_ICON = {
 const STORAGE_KEY = "hamilton-ingredients-checked";
 
 // Items whose `trip` matches this are pulled into their own group at the top.
-const CURRENT_TRIP = "Shopping Aug 20";
+const CURRENT_TRIP = "Pasta + Moscow Mules";
 
 function escapeHTML(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({
